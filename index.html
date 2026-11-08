@@ -1,9 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<!-- SITE SWITCH: change data-site below to "offline" to turn the whole portfolio
+     into an error page, or back to "online" to restore it. Commit the file to apply.
+     To preview the error page without changing anything, open the site with ?offline
+     at the end of the address, for example https://atanumondal.me/?offline -->
+<html lang="en" data-site="online">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Atanu Mondal | VLSI Design and Verification</title>
+  <script>
+    (function () {
+      var root = document.documentElement;
+      if (/[?&]offline(&|=|$)/.test(location.search)) root.setAttribute("data-site", "offline");
+      if (root.getAttribute("data-site") === "offline") document.title = "Site offline | Atanu Mondal";
+    })();
+  </script>
   <meta name="description" content="Portfolio of Atanu Mondal, a B.Tech student in VLSI design. SystemVerilog RTL, UVM testbenches and verification projects.">
   <meta name="theme-color" content="#08121f">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%2308121f'/%3E%3Cpath d='M3 22h6V10h8v12h6V10h6' fill='none' stroke='%23e9a64a' stroke-width='2.5'/%3E%3C/svg%3E">
@@ -15,6 +26,26 @@
 <body>
 
   <a class="skip" href="#main">Skip to content</a>
+
+  <!-- Error page: only visible when data-site="offline" -->
+  <div class="offline" role="status">
+    <div class="wrap offline-inner">
+      <p class="code">503</p>
+      <h1>Site offline</h1>
+      <p class="msg">This portfolio is temporarily unavailable. Please check back soon.</p>
+      <svg class="offline-wave" viewBox="0 0 520 120" role="img" aria-label="Flat signal lines: no clock, no signal" xmlns="http://www.w3.org/2000/svg">
+        <text class="sig" x="0" y="34">baud_clk</text>
+        <path class="dead" d="M110 30H520"/>
+        <text class="sig" x="0" y="94">tx</text>
+        <path class="dead tx" d="M110 90H520"/>
+        <text class="sig" x="110" y="116">no signal</text>
+      </svg>
+      <ul class="offline-links">
+        <li><a href="mailto:2007atanu.mondal@gmail.com">Email me</a></li>
+        <li><a href="https://github.com/atanumondal7">GitHub</a></li>
+      </ul>
+    </div>
+  </div>
 
   <header class="site">
     <div class="wrap bar">
@@ -116,7 +147,7 @@
               <div><dt>Framing</dt><dd>8N1 at 115200 baud</dd></div>
               <div><dt>Verification</dt><dd>UVM testbench, TX to RX loopback</dd></div>
             </dl>
-            <a class="repo" href="https://github.com/atanumondal7/UART">View repository</a>
+            <a class="repo" href="https://github.com/atanumondal7">View repository</a>
           </div>
         </article>
 
@@ -135,7 +166,7 @@
               <div><dt>Design</dt><dd>RTL</dd></div>
               <div><dt>Verification</dt><dd>Class-based testbench</dd></div>
             </dl>
-            <a class="repo" href="https://github.com/atanumondal7/digital-alarm-clock">View repository</a>
+            <a class="repo" href="https://github.com/atanumondal7">View repository</a>
           </div>
         </article>
 
@@ -171,7 +202,7 @@
               <div><dt>Language</dt><dd>SystemVerilog</dd></div>
               <div><dt>Design</dt><dd>RTL block with FSM control</dd></div>
             </dl>
-            <a class="repo" href="https://github.com/atanumondal7/i2c-building-blocks">View repository</a>
+            <a class="repo" href="https://github.com/atanumondal7">View repository</a>
           </div>
         </article>
       </div>
@@ -247,7 +278,7 @@
         <ul class="links">
           <li><a href="https://github.com/atanumondal7">GitHub</a></li>
           <!-- TODO: replace with your real LinkedIn URL -->
-          <li><a href="https://www.linkedin.com/in/atanu-mondal7">LinkedIn</a></li>
+          <li><a href="https://www.linkedin.com/in/your-linkedin-handle">LinkedIn</a></li>
         </ul>
       </div>
     </section>

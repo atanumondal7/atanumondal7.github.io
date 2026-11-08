@@ -476,3 +476,77 @@ h3 {
   .bar nav a { font-size: 0.85rem; }
   .spec > div { grid-template-columns: minmax(0, 1fr); gap: 2px; }
 }
+
+/* ---------- site switch: error page ----------
+   Set data-site="offline" on <html> in index.html to show this instead of the
+   portfolio. Pure CSS, so there is no flash of the portfolio first. */
+
+.offline {
+  display: none;
+  min-height: 100vh;
+  align-items: center;
+  padding: 64px 0;
+}
+
+[data-site="offline"] .offline { display: flex; }
+
+[data-site="offline"] .skip,
+[data-site="offline"] .site,
+[data-site="offline"] main,
+[data-site="offline"] .site-foot {
+  display: none;
+}
+
+.offline .code {
+  margin: 0 0 12px;
+  font-family: var(--mono);
+  font-weight: 700;
+  font-size: clamp(3.5rem, 15vw, 8.5rem);
+  line-height: 1;
+  letter-spacing: -0.05em;
+  color: var(--copper);
+}
+
+.offline h1 {
+  margin: 0 0 16px;
+  font-size: clamp(1.5rem, 4.5vw, 2.4rem);
+}
+
+.offline .msg {
+  max-width: 30em;
+  margin: 0 0 36px;
+  color: var(--muted);
+}
+
+.offline-wave {
+  display: block;
+  width: 100%;
+  max-width: 520px;
+  height: auto;
+  margin: 0 0 36px;
+}
+
+.offline-wave .dead {
+  fill: none;
+  stroke: var(--signal);
+  stroke-width: 2.5;
+  stroke-dasharray: 3 7;
+}
+
+.offline-wave .dead.tx { stroke: var(--copper); }
+
+.offline-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 28px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.offline-links a {
+  color: var(--copper);
+  text-underline-offset: 4px;
+}
+
+.offline-links a:hover { color: var(--text); }
