@@ -3,18 +3,262 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Atanu Mondal | VLSI Design & Verification</title>
+  <title>Atanu Mondal | VLSI Design and Verification</title>
+  <meta name="description" content="Portfolio of Atanu Mondal, a B.Tech student in VLSI design. SystemVerilog RTL, UVM testbenches and verification projects.">
+  <meta name="theme-color" content="#08121f">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%2308121f'/%3E%3Cpath d='M3 22h6V10h8v12h6V10h6' fill='none' stroke='%23e9a64a' stroke-width='2.5'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&family=Martian+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Atanu Mondal</h1>
-  <p>VLSI design and verification student.</p>
 
-  <h2>Projects</h2>
-  <ul>
-    <li><a href="https://github.com/atanumondal7/UART">UART TX/RX with UVM testbench</a></li>
-  </ul>
+  <a class="skip" href="#main">Skip to content</a>
 
-  <h2>Contact</h2>
-  <p><a href="mailto:2007atanu.mondal@gmail.com">2007atanu.mondal@gmail.com</a></p>
+  <header class="site">
+    <div class="wrap bar">
+      <a class="mark" href="#top">Atanu Mondal</a>
+      <nav aria-label="Main">
+        <a href="#projects">Projects</a>
+        <a href="#skills">Skills</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- HERO -->
+    <section class="hero" id="top">
+      <div class="wrap">
+        <h1>Atanu Mondal</h1>
+        <p class="lead">
+          I design digital logic in SystemVerilog and build the testbenches that check it.
+          I'm a B.Tech student in VLSI design, learning the field from gates upward.
+        </p>
+        <div class="actions">
+          <a class="btn primary" href="#projects">View projects</a>
+          <a class="btn" href="mailto:2007atanu.mondal@gmail.com">Email me</a>
+        </div>
+
+        <figure class="figure">
+          <div class="scroll">
+            <svg viewBox="0 0 960 270" role="img" aria-labelledby="diagram-title diagram-desc" xmlns="http://www.w3.org/2000/svg">
+              <title id="diagram-title">UART frame timing diagram</title>
+              <desc id="diagram-desc">A baud clock above a UART transmit line sending one 8N1 frame for the byte 0x41: a start bit, eight data bits sent least significant bit first, and a stop bit.</desc>
+
+              <!-- cell boundaries -->
+              <path class="gridline" d="M100 30V200M170 30V200M240 30V200M310 30V200M380 30V200M450 30V200M520 30V200M590 30V200M660 30V200M730 30V200M800 30V200M870 30V200M940 30V200"/>
+
+              <!-- signal names -->
+              <text class="sig" x="8" y="73">baud_clk</text>
+              <text class="sig" x="8" y="163">tx</text>
+
+              <!-- baud clock -->
+              <path class="wave draw" pathLength="1" d="M100 85V50H135V85H170V50H205V85H240V50H275V85H310V50H345V85H380V50H415V85H450V50H485V85H520V50H555V85H590V50H625V85H660V50H695V85H730V50H765V85H800V50H835V85H870V50H905V85H940"/>
+
+              <!-- tx line: idle, start, D0..D7 (0x41, LSB first), stop, idle -->
+              <path class="wave tx draw late" pathLength="1" d="M100 135H170V180H240V135H310V180H660V135H730V180H800V135H940"/>
+
+              <!-- cell names -->
+              <g class="cells">
+                <text x="135" y="218">idle</text>
+                <text x="205" y="218">start</text>
+                <text x="275" y="218">D0</text>
+                <text x="345" y="218">D1</text>
+                <text x="415" y="218">D2</text>
+                <text x="485" y="218">D3</text>
+                <text x="555" y="218">D4</text>
+                <text x="625" y="218">D5</text>
+                <text x="695" y="218">D6</text>
+                <text x="765" y="218">D7</text>
+                <text x="835" y="218">stop</text>
+                <text x="905" y="218">idle</text>
+              </g>
+
+              <!-- data bracket -->
+              <g class="cells">
+                <path class="bracket" d="M245 238V244H795V238"/>
+                <text class="byte" x="520" y="262">0x41 sent LSB first</text>
+              </g>
+            </svg>
+          </div>
+          <figcaption>
+            One UART frame in 8N1 format, carrying 0x41, the letter A. Transmitting frames like this
+            and checking them in loopback is what my UART project does.
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section class="section" id="projects">
+      <div class="wrap">
+        <h2>Projects</h2>
+        <p class="section-intro">RTL designs, and the testbenches I wrote to verify them.</p>
+
+        <!-- TODO: replace each repository link below with the real repo URL -->
+        <article class="project">
+          <div class="project-head">
+            <h3>UART TX/RX with UVM testbench</h3>
+            <p class="status">Verified in loopback</p>
+          </div>
+          <div class="project-body">
+            <p>
+              A UART transmitter and receiver, checked by connecting the transmitter to the receiver
+              and driving the pair from a UVM testbench. The receiver samples each bit at 16 times the
+              baud rate.
+            </p>
+            <dl class="spec">
+              <div><dt>Language</dt><dd>SystemVerilog</dd></div>
+              <div><dt>Framing</dt><dd>8N1 at 115200 baud</dd></div>
+              <div><dt>Verification</dt><dd>UVM testbench, TX to RX loopback</dd></div>
+            </dl>
+            <a class="repo" href="https://github.com/atanumondal7/UART">View repository</a>
+          </div>
+        </article>
+
+        <article class="project">
+          <div class="project-head">
+            <h3>Digital alarm clock</h3>
+            <p class="status">In progress</p>
+          </div>
+          <div class="project-body">
+            <p>
+              A digital alarm clock written as RTL, with a class-based testbench that drives it and
+              checks its behavior.
+            </p>
+            <dl class="spec">
+              <div><dt>Language</dt><dd>SystemVerilog</dd></div>
+              <div><dt>Design</dt><dd>RTL</dd></div>
+              <div><dt>Verification</dt><dd>Class-based testbench</dd></div>
+            </dl>
+            <a class="repo" href="https://github.com/atanumondal7/digital-alarm-clock">View repository</a>
+          </div>
+        </article>
+
+        <article class="project">
+          <div class="project-head">
+            <h3>ALU verification</h3>
+            <p class="status">Testbench</p>
+          </div>
+          <div class="project-body">
+            <p>
+              A testbench for an arithmetic logic unit, built around coverage-driven verification:
+              randomized stimulus, with coverage showing which behaviors have been exercised.
+            </p>
+            <dl class="spec">
+              <div><dt>Language</dt><dd>SystemVerilog</dd></div>
+              <div><dt>Verification</dt><dd>Coverage-driven, randomized stimulus</dd></div>
+            </dl>
+            <a class="repo" href="https://github.com/atanumondal7">View repository</a>
+          </div>
+        </article>
+
+        <article class="project">
+          <div class="project-head">
+            <h3>I2C shift register</h3>
+            <p class="status">In design</p>
+          </div>
+          <div class="project-body">
+            <p>
+              A shift register block for an I2C interface, controlled by a finite state machine.
+              I'm working out the ports and state transitions in block diagrams before writing the RTL.
+            </p>
+            <dl class="spec">
+              <div><dt>Language</dt><dd>SystemVerilog</dd></div>
+              <div><dt>Design</dt><dd>RTL block with FSM control</dd></div>
+            </dl>
+            <a class="repo" href="https://github.com/atanumondal7/i2c-building-blocks">View repository</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section class="section" id="skills">
+      <div class="wrap">
+        <h2>Skills</h2>
+        <p class="section-intro">What I use, grouped by the job it does.</p>
+        <div class="skill-grid">
+          <div>
+            <h3>Design</h3>
+            <ul>
+              <li>SystemVerilog RTL</li>
+              <li>Finite state machines</li>
+              <li>Gate-level digital logic</li>
+              <li>Logisim circuit simulation</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Verification</h3>
+            <ul>
+              <li>UVM testbenches</li>
+              <li>Class-based testbench architecture</li>
+              <li>Constrained-random stimulus</li>
+              <li>Coverage-driven verification</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Foundations</h3>
+            <ul>
+              <li>Circuit analysis</li>
+              <li>Semiconductor physics</li>
+              <li>Engineering mathematics</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="section" id="about">
+      <div class="wrap about">
+        <div>
+          <h2>About</h2>
+          <p>
+            I'm a B.Tech student in Electronics, specializing in VLSI design and technology. I taught
+            myself the field from gate-level logic up to object-oriented, randomized verification,
+            because I want to understand why a circuit behaves the way it does, not only how to describe it.
+          </p>
+          <p>
+            I work on one area until it makes sense before starting the next, and I document each
+            project with diagrams and a README so someone else can follow it.
+          </p>
+        </div>
+        <dl class="facts">
+          <div><dt>Focus</dt><dd>VLSI design and verification</dd></div>
+          <div><dt>Studying</dt><dd>B.Tech Electronics, VLSI Design and Technology</dd></div>
+          <div><dt>Language</dt><dd>SystemVerilog</dd></div>
+          <div><dt>Methodology</dt><dd>UVM</dd></div>
+          <div><dt>Based in</dt><dd>Kolkata, India</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="section contact" id="contact">
+      <div class="wrap">
+        <h2>Contact</h2>
+        <p class="section-intro">Message me about my projects, internships, or verification.</p>
+        <a class="email" href="mailto:2007atanu.mondal@gmail.com">2007atanu.mondal@gmail.com</a>
+        <ul class="links">
+          <li><a href="https://github.com/atanumondal7">GitHub</a></li>
+          <!-- TODO: replace with your real LinkedIn URL -->
+          <li><a href="https://www.linkedin.com/in/atanu-mondal7">LinkedIn</a></li>
+        </ul>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-foot">
+    <div class="wrap">
+      <p>&copy; 2026 Atanu Mondal. Kolkata, India.</p>
+    </div>
+  </footer>
+
 </body>
 </html>
