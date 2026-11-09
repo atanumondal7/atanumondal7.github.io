@@ -312,6 +312,8 @@
       img.onload = function () {
         if (mine !== token) return;
         img.alt = t.getAttribute("data-title") + " " + kind;
+        // Siemens badges are transparent with black text: put every image on a light mat.
+        img.style.cssText = "box-sizing:border-box;padding:20px;border-radius:12px;background:#eef2f8";
         stage.innerHTML = "";
         stage.appendChild(img);
       };

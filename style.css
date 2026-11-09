@@ -1419,6 +1419,12 @@ html:has(dialog[open]) { overflow: hidden; }
   max-width: 100%;
   max-height: min(68vh, 720px);
   object-fit: contain;
+  /* Siemens badges have a transparent background with black text, so every
+     image sits on a light mat to stay readable on the dark page. */
+  box-sizing: border-box;
+  padding: 20px;
+  border-radius: 12px;
+  background: #eef2f8;
 }
 
 .lb-loading { font: 500 0.85rem var(--mono); color: var(--muted); }
