@@ -1723,3 +1723,5 @@ html:has(dialog[open]) { overflow: hidden; }
   .frame li { height: 32px; font-size: 0.6rem; }
   .bar-right { justify-content: flex-start; }
 }
+
+.chip.is-sem { color: var(--signal); border-color: rgba(122, 168, 255, 0.4); }
