@@ -34,6 +34,7 @@
     initViewer();
     initSkills();
     initReveals();
+    initLightbox();
   });
 
   /* ---------- error screen ---------- */
@@ -231,6 +232,117 @@
 
     var first = box.querySelector(".skill-item.is-active");
     select(first ? first.getAttribute("data-skill") : null);
+  }
+
+  /* ---------- credential image viewer ----------
+     Every [data-view] button opens a dialog showing the image for that
+     badge or certificate. The image is looked up as <data-image>.png, .jpg,
+     .jpeg or .webp, so upload it under assets/badges/ or assets/certificates/
+     with the file name shown in data-image. */
+
+  function initLightbox() {
+    var triggers = [].slice.call(document.querySelectorAll("[data-view]"));
+    if (!triggers.length || !window.HTMLDialogElement) return;
+
+    var EXT = ["png", "jpg", "jpeg", "webp"];
+    var dlg = document.createElement("dialog");
+    dlg.className = "lb";
+    dlg.setAttribute("aria-labelledby", "lb-title");
+    dlg.innerHTML =
+      '<div class="panel-bar lb-bar"><span id="lb-title"></span>' +
+      '<span class="bar-right"><span class="lb-count" aria-hidden="true"></span>' +
+      '<button type="button" class="replay lb-close">Close</button></span></div>' +
+      '<div class="lb-stage"></div>' +
+      '<div class="lb-foot"><span class="lb-nav">' +
+      '<button type="button" class="btn sm" data-prev>Previous</button>' +
+      '<button type="button" class="btn sm" data-next>Next</button></span>' +
+      '<a class="btn sm primary lb-verify" target="_blank" rel="noopener" hidden></a></div>';
+    document.body.appendChild(dlg);
+
+    var title = dlg.querySelector("#lb-title");
+    var count = dlg.querySelector(".lb-count");
+    var stage = dlg.querySelector(".lb-stage");
+    var verify = dlg.querySelector(".lb-verify");
+    var prev = dlg.querySelector("[data-prev]");
+    var next = dlg.querySelector("[data-next]");
+    var index = 0, token = 0, opener = null;
+
+    if (triggers.length < 2) { prev.hidden = true; next.hidden = true; }
+
+    function missing(t, base) {
+      var kind = t.getAttribute("data-kind") || "badge";
+      var box = document.createElement("div");
+      box.className = "lb-missing";
+      box.innerHTML =
+        '<div class="hexseal" aria-hidden="true"><span>X</span></div>' +
+        "<p></p><p class=\"hint\"></p>";
+      box.querySelectorAll("p")[0].textContent =
+        "The image of this " + kind + " hasn't been added yet." +
+        (t.getAttribute("data-verify") ? " You can still verify it with the button below." : "");
+      box.querySelectorAll("p")[1].textContent = "Expected file: " + base + ".png";
+      stage.innerHTML = "";
+      stage.appendChild(box);
+    }
+
+    function show(i) {
+      var n = triggers.length;
+      index = (i + n) % n;
+      var t = triggers[index];
+      var base = t.getAttribute("data-image");
+      var kind = t.getAttribute("data-kind") || "badge";
+      title.textContent = t.getAttribute("data-title");
+      count.textContent = index + 1 + " of " + n;
+
+      var vurl = t.getAttribute("data-verify");
+      if (vurl) {
+        verify.href = vurl;
+        verify.textContent = t.getAttribute("data-verify-label") || "Verify";
+        verify.hidden = false;
+      } else {
+        verify.hidden = true;
+      }
+
+      stage.innerHTML = '<span class="lb-loading">Loading</span>';
+      var mine = ++token, tried = 0, img = new Image();
+      function tryNext() {
+        if (mine !== token) return;
+        if (tried >= EXT.length) { missing(t, base); return; }
+        img.src = base + "." + EXT[tried++];
+      }
+      img.onload = function () {
+        if (mine !== token) return;
+        img.alt = t.getAttribute("data-title") + " " + kind;
+        stage.innerHTML = "";
+        stage.appendChild(img);
+      };
+      img.onerror = tryNext;
+      tryNext();
+    }
+
+    triggers.forEach(function (t) {
+      t.addEventListener("click", function () {
+        opener = t;
+        show(triggers.indexOf(t));
+        dlg.showModal();
+      });
+    });
+
+    prev.addEventListener("click", function () { show(index - 1); });
+    next.addEventListener("click", function () { show(index + 1); });
+    dlg.querySelector(".lb-close").addEventListener("click", function () { dlg.close(); });
+
+    dlg.addEventListener("click", function (e) { if (e.target === dlg) dlg.close(); });
+
+    dlg.addEventListener("keydown", function (e) {
+      if (triggers.length < 2) return;
+      if (e.key === "ArrowRight") { e.preventDefault(); show(index + 1); }
+      else if (e.key === "ArrowLeft") { e.preventDefault(); show(index - 1); }
+    });
+
+    dlg.addEventListener("close", function () {
+      token++;
+      if (opener) opener.focus();
+    });
   }
 
   /* ---------- reveal on scroll (results log, meters, journey stages) ---------- */
