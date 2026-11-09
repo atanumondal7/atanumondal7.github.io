@@ -1,293 +1,363 @@
 <!DOCTYPE html>
-<!-- SITE SWITCH: change data-site below to "offline" to turn the whole portfolio
-     into an error page, or back to "online" to restore it. Commit the file to apply.
-     To preview the error page without changing anything, open the site with ?offline
-     at the end of the address, for example https://atanumondal.me/?offline -->
 <html lang="en" data-site="online">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Atanu Mondal | VLSI Design and Verification</title>
-  <script>
-    (function () {
-      var root = document.documentElement;
-      if (/[?&]offline(&|=|$)/.test(location.search)) root.setAttribute("data-site", "offline");
-      if (root.getAttribute("data-site") === "offline") document.title = "Site offline | Atanu Mondal";
-    })();
-  </script>
-  <meta name="description" content="Portfolio of Atanu Mondal, a B.Tech student in VLSI design. SystemVerilog RTL, UVM testbenches and verification projects.">
-  <meta name="theme-color" content="#08121f">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%2308121f'/%3E%3Cpath d='M3 22h6V10h8v12h6V10h6' fill='none' stroke='%23e9a64a' stroke-width='2.5'/%3E%3C/svg%3E">
+  <script src="site.js"></script>
+  <meta name="description" content="Atanu Mondal, a B.Tech student in VLSI design. SystemVerilog RTL, UVM testbenches and coverage-driven verification.">
+  <meta name="theme-color" content="#0a0e17">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230a0e17'/%3E%3Cpath d='M4 22h6V10h8v12h6V10h4' fill='none' stroke='%23ffc857' stroke-width='2.6'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&family=Martian+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
   <a class="skip" href="#main">Skip to content</a>
 
-  <!-- Error page: only visible when data-site="offline" -->
-  <div class="offline" role="status">
-    <div class="wrap offline-inner">
-      <p class="code">503</p>
-      <h1>Site offline</h1>
-      <p class="msg">This portfolio is temporarily unavailable. Please check back soon.</p>
-      <svg class="offline-wave" viewBox="0 0 520 120" role="img" aria-label="Flat signal lines: no clock, no signal" xmlns="http://www.w3.org/2000/svg">
-        <text class="sig" x="0" y="34">baud_clk</text>
-        <path class="dead" d="M110 30H520"/>
-        <text class="sig" x="0" y="94">tx</text>
-        <path class="dead tx" d="M110 90H520"/>
-        <text class="sig" x="110" y="116">no signal</text>
-      </svg>
-      <ul class="offline-links">
-        <li><a href="mailto:2007atanu.mondal@gmail.com">Email me</a></li>
-        <li><a href="https://github.com/atanumondal7">GitHub</a></li>
-      </ul>
-    </div>
-  </div>
-
-  <header class="site">
-    <div class="wrap bar">
-      <a class="mark" href="#top">Atanu Mondal</a>
-      <nav aria-label="Main">
-        <a href="#projects">Projects</a>
-        <a href="#skills">Skills</a>
-        <a href="#about">About</a>
-        <a href="#contact">Contact</a>
+  <header class="chrome">
+    <div class="chrome-in">
+      <a class="brand" href="index.html" aria-label="Atanu Mondal, overview"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="6" fill="#141c2c"/><path d="M3.5 16.5h4v-9h5v9h4v-9h3.5" fill="none" stroke="#ffc857" stroke-width="2" stroke-linejoin="miter"/></svg><span>Atanu Mondal</span></a>
+      <nav class="tabs" aria-label="Sections">
+        <a href="index.html" aria-current="page">Overview<span class="ind" aria-hidden="true"></span></a>
+        <a href="projects.html">Projects</a>
+        <a href="certifications.html">Certifications</a>
+        <a href="badges.html">Badges</a>
+        <a href="journey.html">Journey</a>
       </nav>
+      <a class="mail" href="mailto:2007atanu.mondal@gmail.com">Email</a>
     </div>
   </header>
 
   <main id="main">
 
-    <!-- HERO -->
-    <section class="hero" id="top">
+    <section class="hero" aria-label="Introduction">
       <div class="wrap">
-        <h1>Atanu Mondal</h1>
-        <p class="lead">
-          I design digital logic in SystemVerilog and build the testbenches that check it.
-          I'm a B.Tech student in VLSI design, learning the field from gates upward.
-        </p>
+        <div class="panel viewer" data-viewer>
+          <div class="panel-bar">
+            <span>atanu.wdb</span>
+            <span class="bar-right">
+              <span class="readout" data-readout aria-hidden="true">t = 999 ns</span>
+              <button type="button" class="replay" data-replay>Run again</button>
+            </span>
+          </div>
+          <div class="vbody" tabindex="0" role="group" aria-label="Waveform. Move the pointer over it, or use the arrow keys, to read each signal's value at that time.">
+            <div class="vgrid" aria-hidden="true"></div>
+
+            <div class="vrow ruler" aria-hidden="true">
+              <div class="vname"></div><div class="vval"></div>
+              <div class="vwave vruler"><span class="tick is-first" style="--x:0%">0</span><span class="tick" style="--x:20%">200</span><span class="tick" style="--x:40%">400</span><span class="tick" style="--x:60%">600</span><span class="tick" style="--x:80%">800</span><span class="tick is-last" style="--x:100%">1000 ns</span></div>
+            </div>
+
+            <div class="vrow">
+              <div class="vname">clk</div>
+              <div class="vval" data-val="clk" aria-hidden="true">1</div>
+              <div class="vwave vtrace" aria-hidden="true">
+                <svg class="wave" viewBox="0 0 1000 40" preserveAspectRatio="none"><path d="M0 34H25V6H50V34H75V6H100V34H125V6H150V34H175V6H200V34H225V6H250V34H275V6H300V34H325V6H350V34H375V6H400V34H425V6H450V34H475V6H500V34H525V6H550V34H575V6H600V34H625V6H650V34H675V6H700V34H725V6H750V34H775V6H800V34H825V6H850V34H875V6H900V34H925V6H950V34H975V6H1000"/></svg>
+              </div>
+            </div>
+
+            <div class="vrow">
+              <div class="vname">rst_n</div>
+              <div class="vval" data-val="rst" aria-hidden="true">1</div>
+              <div class="vwave vtrace" aria-hidden="true">
+                <svg class="wave" viewBox="0 0 1000 40" preserveAspectRatio="none"><path d="M0 34H280V6H1000"/></svg>
+              </div>
+            </div>
+
+            <div class="vrow">
+              <div class="vname">name</div>
+              <div class="vval" data-val="name" aria-hidden="true">Atanu Mondal</div>
+              <div class="vwave vtrace" style="--h:96px">
+                <div class="seg hexbus is-x" style="--l:0%;--w:28%" aria-hidden="true"><div class="in"><span>X</span></div></div>
+                <div class="seg hexbus is-name" style="--l:28%;--w:72%"><div class="in"><h1>Atanu Mondal</h1></div></div>
+              </div>
+            </div>
+
+            <div class="vrow">
+              <div class="vname">focus</div>
+              <div class="vval" data-val="focus" aria-hidden="true">UVM</div>
+              <div class="vwave vtrace" style="--h:56px" aria-hidden="true">
+                <div class="seg hexbus is-x" style="--l:0%;--w:28%"><div class="in"><span>X</span></div></div>
+                <div class="seg hexbus" style="--l:28%;--w:24%"><div class="in"><span class="full">VLSI design</span><span class="short">VLSI</span></div></div>
+                <div class="seg hexbus" style="--l:52%;--w:24%"><div class="in"><span class="full">SystemVerilog</span><span class="short">SV</span></div></div>
+                <div class="seg hexbus" style="--l:76%;--w:24%"><div class="in"><span>UVM</span></div></div>
+              </div>
+            </div>
+
+            <div class="cursor-track" aria-hidden="true"><div class="cursor"></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="wrap intro">
+      <div>
+        <p class="lead">I'm a B.Tech student in VLSI design. I write digital designs in SystemVerilog and the testbenches that verify them, from coverage-driven benches to UVM environments. I taught myself the field from gate-level logic upward, and I like knowing why a circuit behaves the way it does.</p>
         <div class="actions">
-          <a class="btn primary" href="#projects">View projects</a>
+          <a class="btn primary" href="projects.html">View projects</a>
           <a class="btn" href="mailto:2007atanu.mondal@gmail.com">Email me</a>
+          <a class="btn" href="https://github.com/atanumondal7">GitHub</a>
         </div>
-
-        <figure class="figure">
-          <div class="scroll">
-            <svg viewBox="0 0 960 270" role="img" aria-labelledby="diagram-title diagram-desc" xmlns="http://www.w3.org/2000/svg">
-              <title id="diagram-title">UART frame timing diagram</title>
-              <desc id="diagram-desc">A baud clock above a UART transmit line sending one 8N1 frame for the byte 0x41: a start bit, eight data bits sent least significant bit first, and a stop bit.</desc>
-
-              <!-- cell boundaries -->
-              <path class="gridline" d="M100 30V200M170 30V200M240 30V200M310 30V200M380 30V200M450 30V200M520 30V200M590 30V200M660 30V200M730 30V200M800 30V200M870 30V200M940 30V200"/>
-
-              <!-- signal names -->
-              <text class="sig" x="8" y="73">baud_clk</text>
-              <text class="sig" x="8" y="163">tx</text>
-
-              <!-- baud clock -->
-              <path class="wave draw" pathLength="1" d="M100 85V50H135V85H170V50H205V85H240V50H275V85H310V50H345V85H380V50H415V85H450V50H485V85H520V50H555V85H590V50H625V85H660V50H695V85H730V50H765V85H800V50H835V85H870V50H905V85H940"/>
-
-              <!-- tx line: idle, start, D0..D7 (0x41, LSB first), stop, idle -->
-              <path class="wave tx draw late" pathLength="1" d="M100 135H170V180H240V135H310V180H660V135H730V180H800V135H940"/>
-
-              <!-- cell names -->
-              <g class="cells">
-                <text x="135" y="218">idle</text>
-                <text x="205" y="218">start</text>
-                <text x="275" y="218">D0</text>
-                <text x="345" y="218">D1</text>
-                <text x="415" y="218">D2</text>
-                <text x="485" y="218">D3</text>
-                <text x="555" y="218">D4</text>
-                <text x="625" y="218">D5</text>
-                <text x="695" y="218">D6</text>
-                <text x="765" y="218">D7</text>
-                <text x="835" y="218">stop</text>
-                <text x="905" y="218">idle</text>
-              </g>
-
-              <!-- data bracket -->
-              <g class="cells">
-                <path class="bracket" d="M245 238V244H795V238"/>
-                <text class="byte" x="520" y="262">0x41 sent LSB first</text>
-              </g>
-            </svg>
-          </div>
-          <figcaption>
-            One UART frame in 8N1 format, carrying 0x41, the letter A. Transmitting frames like this
-            and checking them in loopback is what my UART project does.
-          </figcaption>
-        </figure>
       </div>
-    </section>
+      <aside class="edu" aria-labelledby="edu-h">
+        <h2 id="edu-h">Education</h2>
+        <p class="edu-degree">B.Tech in Electronics</p>
+        <p class="edu-spec">Specialization in VLSI Design and Technology</p>
+        <span class="chip is-wip"><span class="dot" aria-hidden="true"></span>In progress</span>
+      </aside>
+    </div>
 
-    <!-- PROJECTS -->
-    <section class="section" id="projects">
+    <section class="section" aria-labelledby="results-h">
       <div class="wrap">
-        <h2>Projects</h2>
-        <p class="section-intro">RTL designs, and the testbenches I wrote to verify them.</p>
-
-        <!-- TODO: replace each repository link below with the real repo URL -->
-        <article class="project">
-          <div class="project-head">
-            <h3>UART TX/RX with UVM testbench</h3>
-            <p class="status">Verified in loopback</p>
-          </div>
-          <div class="project-body">
-            <p>
-              A UART transmitter and receiver, checked by connecting the transmitter to the receiver
-              and driving the pair from a UVM testbench. The receiver samples each bit at 16 times the
-              baud rate.
-            </p>
-            <dl class="spec">
-              <div><dt>Language</dt><dd>SystemVerilog</dd></div>
-              <div><dt>Framing</dt><dd>8N1 at 115200 baud</dd></div>
-              <div><dt>Verification</dt><dd>UVM testbench, TX to RX loopback</dd></div>
-            </dl>
-            <a class="repo" href="https://github.com/atanumondal7">View repository</a>
-          </div>
-        </article>
-
-        <article class="project">
-          <div class="project-head">
-            <h3>Digital alarm clock</h3>
-            <p class="status">In progress</p>
-          </div>
-          <div class="project-body">
-            <p>
-              A digital alarm clock written as RTL, with a class-based testbench that drives it and
-              checks its behavior.
-            </p>
-            <dl class="spec">
-              <div><dt>Language</dt><dd>SystemVerilog</dd></div>
-              <div><dt>Design</dt><dd>RTL</dd></div>
-              <div><dt>Verification</dt><dd>Class-based testbench</dd></div>
-            </dl>
-            <a class="repo" href="https://github.com/atanumondal7">View repository</a>
-          </div>
-        </article>
-
-        <article class="project">
-          <div class="project-head">
-            <h3>ALU verification</h3>
-            <p class="status">Testbench</p>
-          </div>
-          <div class="project-body">
-            <p>
-              A testbench for an arithmetic logic unit, built around coverage-driven verification:
-              randomized stimulus, with coverage showing which behaviors have been exercised.
-            </p>
-            <dl class="spec">
-              <div><dt>Language</dt><dd>SystemVerilog</dd></div>
-              <div><dt>Verification</dt><dd>Coverage-driven, randomized stimulus</dd></div>
-            </dl>
-            <a class="repo" href="https://github.com/atanumondal7">View repository</a>
-          </div>
-        </article>
-
-        <article class="project">
-          <div class="project-head">
-            <h3>I2C shift register</h3>
-            <p class="status">In design</p>
-          </div>
-          <div class="project-body">
-            <p>
-              A shift register block for an I2C interface, controlled by a finite state machine.
-              I'm working out the ports and state transitions in block diagrams before writing the RTL.
-            </p>
-            <dl class="spec">
-              <div><dt>Language</dt><dd>SystemVerilog</dd></div>
-              <div><dt>Design</dt><dd>RTL block with FSM control</dd></div>
-            </dl>
-            <a class="repo" href="https://github.com/atanumondal7">View repository</a>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <!-- SKILLS -->
-    <section class="section" id="skills">
-      <div class="wrap">
-        <h2>Skills</h2>
-        <p class="section-intro">What I use, grouped by the job it does.</p>
-        <div class="skill-grid">
-          <div>
-            <h3>Design</h3>
-            <ul>
-              <li>SystemVerilog RTL</li>
-              <li>Finite state machines</li>
-              <li>Gate-level digital logic</li>
-              <li>Logisim circuit simulation</li>
-            </ul>
-          </div>
-          <div>
-            <h3>Verification</h3>
-            <ul>
-              <li>UVM testbenches</li>
-              <li>Class-based testbench architecture</li>
-              <li>Constrained-random stimulus</li>
-              <li>Coverage-driven verification</li>
-            </ul>
-          </div>
-          <div>
-            <h3>Foundations</h3>
-            <ul>
-              <li>Circuit analysis</li>
-              <li>Semiconductor physics</li>
-              <li>Engineering mathematics</li>
-            </ul>
-          </div>
+        <h2 id="results-h">Results</h2>
+        <p class="lede">What my verification work has produced so far.</p>
+        <div class="panel" data-reveal>
+          <div class="panel-bar"><span>results.log</span></div>
+          <ul class="log-lines">
+            <li style="--i:0"><span class="pass">PASS</span><span class="what"><a href="projects.html#uart">UART loopback with a UVM testbench</a></span><span class="val">1000 / 1000 transactions</span></li>
+            <li style="--i:1"><span class="pass">PASS</span><span class="what"><a href="projects.html#alu">4-bit ALU, coverage-driven testbench</a></span><span class="val">100% functional coverage</span></li>
+            <li style="--i:2"><span class="pass">PASS</span><span class="what"><a href="certifications.html">Siemens SystemVerilog UVM exam, Level 1</a></span><span class="val">Passed</span></li>
+          </ul>
         </div>
       </div>
     </section>
 
-    <!-- ABOUT -->
-    <section class="section" id="about">
-      <div class="wrap about">
-        <div>
-          <h2>About</h2>
-          <p>
-            I'm a B.Tech student in Electronics, specializing in VLSI design and technology. I taught
-            myself the field from gate-level logic up to object-oriented, randomized verification,
-            because I want to understand why a circuit behaves the way it does, not only how to describe it.
-          </p>
-          <p>
-            I work on one area until it makes sense before starting the next, and I document each
-            project with diagrams and a README so someone else can follow it.
-          </p>
+    <section class="section" id="skills" aria-labelledby="skills-h">
+      <div class="wrap">
+        <h2 id="skills-h">Skills</h2>
+        <p class="lede">Laid out as the testbench I would build around a design. Select a block, or a skill in the list, to see where I've used it.</p>
+
+        <div class="panel" data-skills>
+          <div class="panel-bar"><span>skills.tb</span></div>
+          <div class="skills-grid">
+
+            <div class="tb-wrap">
+              <svg class="tb" viewBox="0 0 760 430" role="group" aria-label="Skills drawn as a UVM testbench around a design under test. The same skills are listed beside the diagram.">
+                <defs>
+                  <marker id="ah" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="arrow" d="M0 0L8 4L0 8z"/></marker>
+                </defs>
+
+                <rect class="frame" x="2" y="2" width="756" height="426" rx="10"/>
+                <text class="g-name" x="18" y="24">tb_top</text>
+
+                <path class="wire" d="M130 96V120" marker-end="url(#ah)"/>
+                <rect class="group" x="30" y="120" width="490" height="290" rx="8"/>
+                <text class="g-name" x="46" y="142">env</text>
+
+                <!-- test -->
+                <g class="node" data-node="test" tabindex="0" role="button" aria-label="UVM">
+                  <rect class="box" x="30" y="44" width="200" height="52" rx="6"/>
+                  <text class="n-name" x="46" y="64">uvm_test</text>
+                  <text class="n-skill" x="46" y="84">UVM</text>
+                </g>
+
+                <!-- agent -->
+                <g class="node" data-node="agent" tabindex="0" role="button" aria-label="Class-based testbenches">
+                  <rect class="box" x="48" y="154" width="300" height="150" rx="6"/>
+                  <text class="n-name" x="64" y="177">agent</text>
+                  <text class="n-skill" x="332" y="177" text-anchor="end">Class-based testbenches</text>
+
+                  <g class="node" data-node="sequencer" tabindex="0" role="button" aria-label="Constrained-random stimulus">
+                    <rect class="box" x="62" y="196" width="154" height="52" rx="5"/>
+                    <text class="n-name" x="74" y="216">sequencer</text>
+                    <text class="n-small" x="74" y="236">Constrained-random</text>
+                  </g>
+
+                  <rect class="sub" x="232" y="190" width="104" height="36" rx="5"/>
+                  <text class="n-name" x="244" y="213">driver</text>
+                  <rect class="sub" x="232" y="244" width="104" height="36" rx="5"/>
+                  <text class="n-name" x="244" y="267">monitor</text>
+                  <path class="wire" d="M216 208H230" marker-end="url(#ah)"/>
+                </g>
+
+                <!-- checkers -->
+                <g class="node" data-node="scoreboard" tabindex="0" role="button" aria-label="Self-checking scoreboards">
+                  <rect class="box" x="48" y="334" width="140" height="56" rx="6"/>
+                  <text class="n-name" x="62" y="355">scoreboard</text>
+                  <text class="n-small" x="62" y="376">Self-checking</text>
+                </g>
+
+                <g class="node" data-node="coverage" tabindex="0" role="button" aria-label="Coverage-driven verification">
+                  <rect class="box" x="214" y="334" width="140" height="56" rx="6"/>
+                  <text class="n-name" x="228" y="355">coverage</text>
+                  <text class="n-small" x="228" y="376">Coverage-driven</text>
+                </g>
+
+                <path class="wire" d="M284 280V318M118 318H284M118 318V332M284 318V332" marker-end="url(#ah)"/>
+
+                <!-- interface -->
+                <path class="wire" d="M336 208H564" marker-end="url(#ah)"/>
+                <text class="g-name" x="430" y="200">vif</text>
+                <path class="wire" d="M566 262H338" marker-end="url(#ah)"/>
+
+                <!-- design under test -->
+                <g class="node" data-node="dut" tabindex="0" role="button" aria-label="SystemVerilog RTL and finite state machines">
+                  <rect class="box" x="566" y="170" width="170" height="118" rx="6"/>
+                  <text class="n-name" x="582" y="194">dut</text>
+                  <text class="n-skill" x="582" y="222">SystemVerilog RTL</text>
+                  <text class="n-skill" x="582" y="246">Finite state machines</text>
+                </g>
+
+                <!-- foundations -->
+                <path class="wire" d="M651 288V312"/>
+                <text class="g-name" x="566" y="305">foundations</text>
+                <g class="node" data-node="gates" tabindex="0" role="button" aria-label="Gate-level logic">
+                  <rect class="box" x="566" y="314" width="170" height="28" rx="5"/>
+                  <text class="n-small" x="580" y="333">Gate-level logic</text>
+                </g>
+                <g class="node" data-node="circuits" tabindex="0" role="button" aria-label="Circuit analysis">
+                  <rect class="box" x="566" y="348" width="170" height="28" rx="5"/>
+                  <text class="n-small" x="580" y="367">Circuit analysis</text>
+                </g>
+                <g class="node" data-node="physics" tabindex="0" role="button" aria-label="Semiconductor physics">
+                  <rect class="box" x="566" y="382" width="170" height="28" rx="5"/>
+                  <text class="n-small" x="580" y="401">Semiconductor physics</text>
+                </g>
+
+                <circle class="packet" r="4.5" cx="0" cy="0" aria-hidden="true">
+                  <animateMotion dur="7s" repeatCount="indefinite" path="M216 208H640V262H284V318H118V332"/>
+                </circle>
+              </svg>
+            </div>
+
+            <div class="skill-list">
+
+              <div class="skill-group">
+                <h3>Design</h3>
+                <ul>
+                  <li class="skill-item" data-skill="sv-rtl" data-node="dut">
+                    <button class="skill-btn" type="button" aria-expanded="false" aria-controls="sk-sv-rtl"><span>SystemVerilog RTL</span><span class="chev" aria-hidden="true"></span></button>
+                    <div class="skill-more" id="sk-sv-rtl"><div>
+                      <p>Registers, combinational logic and clocked processes written as RTL, with clean module interfaces.</p>
+                      <p class="used">Used in <a href="projects.html#uart">UART</a>, <a href="projects.html#alarm-clock">alarm clock</a>, <a href="projects.html#i2c">I2C blocks</a></p>
+                    </div></div>
+                  </li>
+                  <li class="skill-item" data-skill="fsm" data-node="dut">
+                    <button class="skill-btn" type="button" aria-expanded="false" aria-controls="sk-fsm"><span>Finite state machines</span><span class="chev" aria-hidden="true"></span></button>
+                    <div class="skill-more" id="sk-fsm"><div>
+                      <p>Control logic as explicit states. The I2C shift register moves through IDLE, LOAD, SHIFT and DONE.</p>
+                      <p class="used">Used in <a href="projects.html#i2c">I2C blocks</a>, <a href="projects.html#alarm-clock">alarm clock</a></p>
+                    </div></div>
+                  </li>
+                  <li class="skill-item" data-skill="gates" data-node="gates">
+                    <button class="skill-btn" type="button" aria-expanded="false" aria-controls="sk-gates"><span>Gate-level logic</span><span class="chev" aria-hidden="true"></span></button>
+                    <div class="skill-more" id="sk-gates"><div>
+                      <p>Digital circuits built from gates and simulated in Logisim, including a 4-bit ALU, a JK flip-flop, a 4-bit subtractor and a lottery machine.</p>
+                      <p class="used">See the <a href="journey.html">journey</a></p>
+                    </div></div>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="skill-group">
+                <h3>Verification</h3>
+                <ul>
+                  <li class="skill-item is-active" data-skill="uvm" data-node="test">
+                    <button class="skill-btn" type="button" aria-expanded="true" aria-controls="sk-uvm"><span>UVM</span><span class="chev" aria-hidden="true"></span></button>
+                    <div class="skill-more" id="sk-uvm"><div>
+                      <p>Environments with drivers, sequencers, monitors, a scoreboard and coverage. I passed the Siemens SystemVerilog UVM exam, Level 1.</p>
+                      <p class="used">Used in <a href="projects.html#uart">UART</a></p>
+                    </div></div>
+                  </li>
+                  <li class="skill-item" data-skill="class-tb" data-node="agent">
+                    <button class="skill-btn" type="button" aria-expanded="false" aria-controls="sk-class-tb"><span>Class-based testbenches</span><span class="chev" aria-hidden="true"></span></button>
+                    <div class="skill-more" id="sk-class-tb"><div>
+                      <p>Generators, drivers, monitors and scoreboards written as classes, including the clocking-block timing traps that come with them.</p>
+                      <p class="used">Used in <a href="projects.html#alu">ALU</a>, <a href="projects.html#usr">shift register</a>, <a href="projects.html#alarm-clock">alarm clock</a></p>
+                    </div></div>
+                  </li>
+                  <li class="skill-item" data-skill="crv" data-node="sequencer">
+                    <button class="skill-btn" type="button" aria-expanded="false" aria-controls="sk-crv"><span>Constrained-random stimulus</span><span class="chev" aria-hidden="true"></span></button>
+                    <div class="skill-more" id="sk-crv"><div>
+                      <p>Randomized stimulus that reaches cases a directed test would miss. On simulators without randomize(), I write the randomization by hand.</p>
+                      <p class="used">Used in <a href="projects.html#alu">ALU</a>, <a href="projects.html#uart">UART</a>, <a href="projects.html#usr">shift register</a></p>
+                    </div></div>
+                  </li>
+                  <li class="skill-item" data-skill="sb" data-node="scoreboard">
+                    <button class="skill-btn" type="button" aria-expanded="false" aria-controls="sk-sb"><span>Self-checking scoreboards</span><span class="chev" aria-hidden="true"></span></button>
+                    <div class="skill-more" id="sk-sb"><div>
+                      <p>Scoreboards that compare what the design does against a reference model, so a run reports pass or fail by itself.</p>
+                      <p class="used">Used in <a href="projects.html#uart">UART</a>, <a href="projects.html#alu">ALU</a></p>
+                    </div></div>
+                  </li>
+                  <li class="skill-item" data-skill="cdv" data-node="coverage">
+                    <button class="skill-btn" type="button" aria-expanded="false" aria-controls="sk-cdv"><span>Coverage-driven verification</span><span class="chev" aria-hidden="true"></span></button>
+                    <div class="skill-more" id="sk-cdv"><div>
+                      <p>Coverage bins and crosses that show which behavior has been exercised. The ALU testbench reached 100% functional coverage.</p>
+                      <p class="used">Used in <a href="projects.html#alu">ALU</a>, <a href="projects.html#uart">UART</a>, <a href="projects.html#usr">shift register</a></p>
+                    </div></div>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="skill-group">
+                <h3>Foundations</h3>
+                <ul>
+                  <li class="skill-item" data-skill="circuits" data-node="circuits">
+                    <button class="skill-btn" type="button" aria-expanded="false" aria-controls="sk-circuits"><span>Circuit analysis</span><span class="chev" aria-hidden="true"></span></button>
+                    <div class="skill-more" id="sk-circuits"><div>
+                      <p>Working circuits out from first principles, as groundwork for digital design.</p>
+                    </div></div>
+                  </li>
+                  <li class="skill-item" data-skill="physics" data-node="physics">
+                    <button class="skill-btn" type="button" aria-expanded="false" aria-controls="sk-physics"><span>Semiconductor physics</span><span class="chev" aria-hidden="true"></span></button>
+                    <div class="skill-more" id="sk-physics"><div>
+                      <p>Device behavior from first principles, including an NMOS common-source amplifier modeled in Falstad, and setup, hold and metastability.</p>
+                    </div></div>
+                  </li>
+                  <li class="skill-item" data-skill="math" data-node="none">
+                    <button class="skill-btn" type="button" aria-expanded="false" aria-controls="sk-math"><span>Engineering mathematics</span><span class="chev" aria-hidden="true"></span></button>
+                    <div class="skill-more" id="sk-math"><div>
+                      <p>The math behind circuits and signals.</p>
+                    </div></div>
+                  </li>
+                </ul>
+              </div>
+
+            </div>
+          </div>
+          <div class="toolbar">
+            <span>tools</span>
+            <ul class="chips">
+              <li class="chip">Questa</li>
+              <li class="chip">Quartus</li>
+              <li class="chip">EDA Playground</li>
+              <li class="chip">Logisim</li>
+              <li class="chip">Tcl</li>
+              <li class="chip">Git and GitHub</li>
+            </ul>
+          </div>
         </div>
-        <dl class="facts">
-          <div><dt>Focus</dt><dd>VLSI design and verification</dd></div>
-          <div><dt>Studying</dt><dd>B.Tech Electronics, VLSI Design and Technology</dd></div>
-          <div><dt>Language</dt><dd>SystemVerilog</dd></div>
-          <div><dt>Methodology</dt><dd>UVM</dd></div>
-          <div><dt>Based in</dt><dd>Kolkata, India</dd></div>
-        </dl>
       </div>
     </section>
 
-    <!-- CONTACT -->
-    <section class="section contact" id="contact">
+    <section class="section" aria-labelledby="explore-h">
       <div class="wrap">
-        <h2>Contact</h2>
-        <p class="section-intro">Message me about my projects, internships, or verification.</p>
-        <a class="email" href="mailto:2007atanu.mondal@gmail.com">2007atanu.mondal@gmail.com</a>
-        <ul class="links">
-          <li><a href="https://github.com/atanumondal7">GitHub</a></li>
-          <!-- TODO: replace with your real LinkedIn URL -->
-          <li><a href="https://www.linkedin.com/in/your-linkedin-handle">LinkedIn</a></li>
+        <h2 id="explore-h">Explore</h2>
+        <p class="lede">The rest of the work, one tab at a time.</p>
+        <ul class="explore">
+          <li><a href="projects.html"><span class="name">Projects</span><span class="desc">RTL designs and the testbenches built to verify them.</span><span class="meta">5 builds</span></a></li>
+          <li><a href="certifications.html"><span class="name">Certifications</span><span class="desc">Exams and courses I've completed.</span><span class="meta">1 passed</span></a></li>
+          <li><a href="badges.html"><span class="name">Badges</span><span class="desc">Digital badges from the programs behind them.</span><span class="meta">2 collected</span></a></li>
+          <li><a href="journey.html"><span class="name">Journey</span><span class="desc">From logic gates to a UVM environment, one level of abstraction at a time.</span><span class="meta">6 stages</span></a></li>
         </ul>
       </div>
     </section>
 
   </main>
 
-  <footer class="site-foot">
-    <div class="wrap">
+  <footer class="foot">
+    <div class="wrap foot-in">
       <p>&copy; 2026 Atanu Mondal. Kolkata, India.</p>
+      <ul>
+        <li><a href="mailto:2007atanu.mondal@gmail.com">2007atanu.mondal@gmail.com</a></li>
+        <li><a href="https://github.com/atanumondal7">GitHub</a></li>
+        <!-- TODO: replace with your real LinkedIn address -->
+        <li><a href="https://www.linkedin.com/in/your-linkedin-handle">LinkedIn</a></li>
+      </ul>
     </div>
   </footer>
 
