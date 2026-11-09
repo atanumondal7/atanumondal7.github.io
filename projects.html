@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Projects | Atanu Mondal</title>
   <script src="site.js?v=3"></script>
-  <meta name="description" content="RTL designs and verification testbenches by Atanu Mondal: a UART with a UVM testbench, an ALU with coverage-driven verification, and more.">
+  <meta name="description" content="RTL designs and verification testbenches by Atanu Mondal, a first-semester VLSI student: a UART with a UVM testbench, an ALU with coverage-driven verification, a digital alarm clock and more.">
   <meta name="theme-color" content="#0a0e17">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230a0e17'/%3E%3Cpath d='M4 22h6V10h8v12h6V10h4' fill='none' stroke='%23ffc857' stroke-width='2.6'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -39,60 +39,145 @@
           <span class="sig">page</span>
           <div class="pagebus-wrap"><div class="hexbus pagebus"><div class="in"><h1>Projects</h1></div></div></div>
         </div>
-        <p class="page-intro">RTL designs, and the testbenches I built to verify them.</p>
+        <p class="page-intro">The testbenches are the point. The RTL is my playground for practising verification.</p>
       </div>
     </section>
 
     <div class="wrap">
+
+      <section class="panel ladder" aria-labelledby="ladder-h" data-reveal>
+        <div class="panel-bar"><span>methodology.vcd</span><span class="chip is-wip"><span class="dot" aria-hidden="true"></span>Still climbing</span></div>
+        <div class="ladder-in">
+          <h2 id="ladder-h">The verification ladder</h2>
+          <p class="lede">Each project is one rung up. I started with directed tests, which started even before my first semester began and I'm now writing Verification IP in UVM.</p>
+          <ol class="rungs">
+            <li class="rung" style="--h: 1">
+              <span class="rn">1</span>
+              <h3>Directed tests</h3>
+              <p>Hand-written stimulus for small blocks such as adders, counters and a traffic light.</p>
+              <a href="https://github.com/atanumondal7/SystemVerilog-Workspace/tree/main/basics">basics</a>
+            </li>
+            <li class="rung" style="--h: 2">
+              <span class="rn">2</span>
+              <h3>Constrained-random and coverage</h3>
+              <p>My first time with rand, constraints, covergroups and interfaces.</p>
+              <a href="#alu">4-bit ALU</a>
+            </li>
+            <li class="rung" style="--h: 3">
+              <span class="rn">3</span>
+              <h3>Layered testbench</h3>
+              <p>Generator, driver, monitor and scoreboard in classes, wired with mailboxes.</p>
+              <a href="#usr">Shift register</a><a href="#alarm-clock">Alarm clock</a>
+            </li>
+            <li class="rung" style="--h: 4">
+              <span class="rn">4</span>
+              <h3>UVM</h3>
+              <p>Agent, sequencer, scoreboard with a reference model, coverage and assertions.</p>
+              <a href="#uart">UART</a>
+            </li>
+            <li class="rung is-next" style="--h: 5">
+              <span class="rn">5</span>
+              <h3>UVM across a protocol</h3>
+              <p>An environment that grows block by block until it verifies I2C.</p>
+              <a href="#i2c">I2C</a>
+            </li>
+          </ol>
+        </div>
+      </section>
+
       <div class="projects">
 
         <article class="panel project" id="uart" data-reveal>
-          <div class="panel-bar"><span>uart.sv</span><span class="chip is-pass"><span class="dot" aria-hidden="true"></span>Verified in loopback</span></div>
+          <div class="panel-bar"><span>uart.sv</span><span class="bar-right"><span class="chip rung-chip"><span class="rn">4</span>UVM</span><span class="chip is-pass"><span class="dot" aria-hidden="true"></span>Verified in loopback</span></span></div>
           <div class="project-grid">
             <div class="project-main">
-              <h2>UART TX/RX with a UVM testbench</h2>
-              <p>A parameterized UART transmitter and receiver, with a receiver that samples at 16 times the baud rate. A UVM environment drives the transmitter, and a scoreboard checks the receiver's output against a reference model.</p>
-              <p>The simulator I use, Questa Starter Edition, has no randomize() or covergroup, so the stimulus uses $urandom_range and the coverage is counted by hand in a uvm_subscriber.</p>
+              <h2>UART TX/RX, verified with UVM</h2>
+              <p>The UVM testbench is the real project here. The UART is a parameterized transmitter and a 16x-oversampling receiver, and it gives me something small enough to run my UVM skills on: a driver, a sequencer, two monitors, a scoreboard with a reference model and coverage, plus SystemVerilog assertions on the interface.</p>
+              <p>It has two modes. In loopback the TX feeds the RX. In bit-bang mode the testbench drives the RX line itself, which injects a bad stop bit to test <code>rx_error</code> and scales the bit period to check the baud-rate tolerance.</p>
+              <p>My simulator, Questa Starter Edition, has no randomize() or covergroup, so the stimulus uses $urandom_range and the coverage is counted by hand in a uvm_subscriber.</p>
               <dl class="spec">
-                <div><dt>Language</dt><dd>SystemVerilog</dd></div>
+                <div><dt>Language</dt><dd>SystemVerilog, UVM</dd></div>
                 <div><dt>Framing</dt><dd>8N1 at 115200 baud, 100 MHz clock</dd></div>
-                <div><dt>Environment</dt><dd>Driver, sequencer, two monitors, scoreboard with reference model, coverage</dd></div>
+                <div><dt>Checks</dt><dd>Scoreboard, 6 assertions with cover properties, hand-coded coverage</dd></div>
               </dl>
               <a class="repo" href="https://github.com/atanumondal7/UART">View the repository</a>
             </div>
             <div class="project-side">
-              <h3>loopback result</h3>
-              <p class="big-number">1000<small>of 1000 transactions passed</small></p>
-              <ul class="readout-list">
-                <li><span class="k">failures</span><span class="v">0</span></li>
-              </ul>
+              <div class="side-block">
+                <h3>loopback result</h3>
+                <p class="big-number">1000<small>of 1000 passed</small></p>
+                <ul class="readout-list">
+                  <li><span class="k">failures</span><span class="v">0</span></li>
+                  <li><span class="k">coverage</span><span class="v">100%</span></li>
+                  <li><span class="k">corner values</span><span class="v">6 of 6</span></li>
+                </ul>
+              </div>
+              <div class="side-block">
+                <h3>bit-bang: one frame, stop bit forced low</h3>
+                <ol class="frame" aria-label="One 8N1 frame: a start bit, eight data bits sent least significant bit first, and a stop bit"><li class="f-start"><b>S</b></li><li><b>D0</b></li><li><b>D1</b></li><li><b>D2</b></li><li><b>D3</b></li><li><b>D4</b></li><li><b>D5</b></li><li><b>D6</b></li><li><b>D7</b></li><li class="f-stop is-x"><b>P</b></li></ol>
+                <p class="note">The red stop bit is the injected error. The receiver should raise <code>rx_error</code> and leave <code>rx_data</code> alone.</p>
+              </div>
+              <div class="side-block">
+                <h3>testbench tree</h3>
+<pre class="tree-view" aria-label="UVM component hierarchy"><span class="n">uvm_test</span>
+└─ <span class="n">env</span>
+   ├─ <span class="n">agent</span>
+   │  ├─ driver
+   │  ├─ sequencer
+   │  └─ monitor ×2  <span class="c">tx and rx</span>
+   ├─ <span class="n">scoreboard</span>  <span class="c">reference model</span>
+   └─ <span class="n">coverage</span>  <span class="c">uvm_subscriber</span></pre>
+              </div>
             </div>
           </div>
         </article>
 
         <article class="panel project" id="alu" data-reveal>
-          <div class="panel-bar"><span>alu_cdv</span><span class="chip is-pass"><span class="dot" aria-hidden="true"></span>Complete</span></div>
+          <div class="panel-bar"><span>alu_cdv</span><span class="bar-right"><span class="chip rung-chip"><span class="rn">2</span>Constrained-random</span><span class="chip is-pass"><span class="dot" aria-hidden="true"></span>Complete</span></span></div>
           <div class="project-grid">
             <div class="project-main">
-              <h2>4-bit ALU, coverage-driven verification</h2>
-              <p>A testbench for a 4-bit ALU, rebuilt around a coverage-driven flow: constrained-random stimulus, an object-oriented testbench, cross coverage and a self-checking scoreboard.</p>
+              <h2>4-bit ALU, my first coverage-driven testbench</h2>
+              <p>This was the first time I touched advanced verification methodology. Constrained-random stimulus, coverage-driven verification and interfaces were all new to me, and I used them together in one testbench for a 4-bit ALU.</p>
+              <p>A randomizer class holds the random fields, a weighted opcode distribution and a covergroup with cross coverage. A reference model inside the testbench checks every result.</p>
               <dl class="spec">
                 <div><dt>Language</dt><dd>SystemVerilog</dd></div>
-                <div><dt>Stimulus</dt><dd>Constrained-random</dd></div>
-                <div><dt>Checking</dt><dd>Self-checking scoreboard, cross coverage</dd></div>
+                <div><dt>Design</dt><dd>Add, subtract, AND and OR, with carry, zero and negative flags</dd></div>
+                <div><dt>Checking</dt><dd>Self-checking, cross coverage</dd></div>
               </dl>
-              <a class="repo" href="https://github.com/atanumondal7/SystemVerilog-Workspace">View the repository</a>
+              <a class="repo" href="https://github.com/atanumondal7/SystemVerilog-Workspace/tree/main/projects/alu-cdv">View the repository</a>
             </div>
             <div class="project-side">
-              <h3>functional coverage</h3>
-              <p class="big-number">100%</p>
-              <div class="meter" role="img" aria-label="100 percent functional coverage"><span></span></div>
+              <div class="side-block">
+                <h3>first time using, all in one testbench</h3>
+                <ul class="chips">
+                  <li class="chip">rand</li>
+                  <li class="chip">constraint</li>
+                  <li class="chip">dist</li>
+                  <li class="chip">covergroup</li>
+                  <li class="chip">cross</li>
+                  <li class="chip">interface</li>
+                  <li class="chip">class</li>
+                  <li class="chip">task</li>
+                </ul>
+              </div>
+              <div class="side-block">
+                <h3>functional coverage</h3>
+                <p class="big-number">100%</p>
+                <div class="meter" role="img" aria-label="100 percent functional coverage"><span></span></div>
+              </div>
+              <div class="side-block">
+                <ul class="readout-list">
+                  <li><span class="k">randomized transactions</span><span class="v">5000</span></li>
+                  <li><span class="k">errors</span><span class="v">0</span></li>
+                </ul>
+                <p class="note">The sequel, <a href="https://github.com/atanumondal7/SystemVerilog-Workspace/tree/main/projects/alu-uvm-style">alu-uvm-style</a>, splits the same testbench into layered classes.</p>
+              </div>
             </div>
           </div>
         </article>
 
         <article class="panel project" id="usr" data-reveal>
-          <div class="panel-bar"><span>usr_tb</span><span class="chip is-pass"><span class="dot" aria-hidden="true"></span>Complete</span></div>
+          <div class="panel-bar"><span>usr_tb</span><span class="bar-right"><span class="chip rung-chip"><span class="rn">3</span>Layered testbench</span><span class="chip is-pass"><span class="dot" aria-hidden="true"></span>Complete</span></span></div>
           <div class="project-grid">
             <div class="project-main">
               <h2>Universal shift register testbench</h2>
@@ -102,62 +187,109 @@
                 <div><dt>Stimulus</dt><dd>Randomized with $urandom_range</dd></div>
                 <div><dt>Coverage</dt><dd>85 hand-coded coverage bins</dd></div>
               </dl>
-              <a class="repo" href="https://github.com/atanumondal7/SystemVerilog-Workspace">View the repository</a>
+              <a class="repo" href="https://github.com/atanumondal7/SystemVerilog-Workspace/tree/main/projects/universal-shift-register">View the repository</a>
             </div>
             <div class="project-side">
-              <h3>modes covered</h3>
-              <ul class="chips">
-                <li class="chip">Hold</li>
-                <li class="chip">Shift right</li>
-                <li class="chip">Shift left</li>
-                <li class="chip">Parallel load</li>
-              </ul>
-              <p class="big-number">85<small>coverage bins</small></p>
+              <div class="side-block">
+                <h3>modes covered</h3>
+                <ul class="chips">
+                  <li class="chip">Hold</li>
+                  <li class="chip">Shift right</li>
+                  <li class="chip">Shift left</li>
+                  <li class="chip">Parallel load</li>
+                </ul>
+              </div>
+              <div class="side-block">
+                <h3>85 bins, all covered</h3>
+                <ul class="bins">
+                  <li style="--w: 46"><span class="k">other signals</span><span class="bar"><span></span></span><span class="v">46</span></li>
+                  <li style="--w: 16"><span class="k">p_in values</span><span class="bar"><span></span></span><span class="v">16</span></li>
+                  <li style="--w: 16"><span class="k">p_out values</span><span class="bar"><span></span></span><span class="v">16</span></li>
+                  <li style="--w: 4"><span class="k">modes</span><span class="bar"><span></span></span><span class="v">4</span></li>
+                  <li style="--w: 3"><span class="k">reset, serial in</span><span class="bar"><span></span></span><span class="v">3</span></li>
+                </ul>
+              </div>
+              <div class="side-block">
+                <ul class="readout-list">
+                  <li><span class="k">transactions passed</span><span class="v">5000</span></li>
+                  <li><span class="k">failed</span><span class="v">0</span></li>
+                </ul>
+                <p class="note">The scoreboard flagged mismatches that weren't real bugs. The design was right and my checking was two cycles out of step.</p>
+              </div>
             </div>
           </div>
         </article>
 
         <article class="panel project" id="alarm-clock" data-reveal>
-          <div class="panel-bar"><span>alarm_clock</span><span class="chip is-wip"><span class="dot" aria-hidden="true"></span>In progress</span></div>
+          <div class="panel-bar"><span>alarm_clock</span><span class="bar-right"><span class="chip rung-chip"><span class="rn">3</span>Layered testbench</span><span class="chip is-wip"><span class="dot" aria-hidden="true"></span>In progress</span></span></div>
           <div class="project-grid">
             <div class="project-main">
               <h2>Digital alarm clock</h2>
-              <p>A digital alarm clock built from a spec sheet: seven RTL modules, a run script, and a class-based verification environment with a generator, driver, monitor, scoreboard and coverage.</p>
-              <p>Latching the alarm time is the open bug, a timing conflict with the controller. The testbench's stimulus, checking and coverage are still being filled in.</p>
+              <p>A digital alarm clock that I built from a spec sheet with no reference design: seven RTL modules around a controller FSM. The <code>main</code> branch is fully runnable.</p>
+              <p>The testbench is UVM-style without the UVM library, with a generator, driver, monitor, scoreboard and coverage collector connected by mailboxes. I'm doing it this way so I understand what UVM does underneath. The last two features are being built on a separate branch.</p>
               <dl class="spec">
                 <div><dt>Language</dt><dd>SystemVerilog</dd></div>
-                <div><dt>Design</dt><dd>Seven RTL modules</dd></div>
-                <div><dt>Verification</dt><dd>Class-based environment</dd></div>
+                <div><dt>Design</dt><dd>Seven RTL modules, 256 Hz clock with a fast-watch mode</dd></div>
+                <div><dt>Verification</dt><dd>Class-based, mailbox-connected</dd></div>
               </dl>
-              <span class="repo is-private">The repository stays private until it's finished.</span>
+              <a class="repo" href="https://github.com/atanumondal7/digital-alarm-clock">View the repository</a>
             </div>
             <div class="project-side">
-              <h3>status</h3>
-              <ul class="checklist">
-                <li><span class="mark" aria-hidden="true"></span><span><span class="sr">Done: </span>Timekeeping at 256 Hz</span></li>
-                <li><span class="mark" aria-hidden="true"></span><span><span class="sr">Done: </span>Time-set flow</span></li>
-                <li class="is-open"><span class="mark" aria-hidden="true"></span><span><span class="sr">Open: </span>Alarm time latch (open bug)</span></li>
-                <li class="is-open"><span class="mark" aria-hidden="true"></span><span><span class="sr">Open: </span>Randomized stimulus, scoreboard checks and coverage</span></li>
-              </ul>
+              <div class="side-block">
+                <h3>branches</h3>
+                <ul class="lanes">
+                  <li><span class="chip is-pass"><span class="dot" aria-hidden="true"></span>main</span><span>Design runs end to end</span></li>
+                  <li><span class="chip is-wip"><span class="dot" aria-hidden="true"></span>feature branch</span><span>The last two features</span></li>
+                </ul>
+              </div>
+              <div class="side-block">
+                <h3>coverage bins on main</h3>
+                <ul class="hits">
+                  <li class="hit"><span class="sr">Hit: </span>reset</li>
+                  <li class="hit"><span class="sr">Hit: </span>fast watch</li>
+                  <li class="hit is-x"><span class="sr">Not hit yet: </span>time button</li>
+                  <li class="hit is-x"><span class="sr">Not hit yet: </span>alarm button</li>
+                </ul>
+                <p class="note">The red bins are not hit yet. They are the next thing I'm closing.</p>
+              </div>
+              <div class="side-block">
+                <ul class="readout-list">
+                  <li><span class="k">transactions passed</span><span class="v">1500</span></li>
+                  <li><span class="k">failed</span><span class="v">0</span></li>
+                  <li><span class="k">total coverage</span><span class="v is-amber">50%</span></li>
+                </ul>
+              </div>
             </div>
           </div>
         </article>
 
         <article class="panel project" id="i2c" data-reveal>
-          <div class="panel-bar"><span>i2c-building-blocks</span><span class="chip is-wip"><span class="dot" aria-hidden="true"></span>In progress</span></div>
+          <div class="panel-bar"><span>i2c-building-blocks</span><span class="bar-right"><span class="chip rung-chip"><span class="rn">5</span>UVM across a protocol</span><span class="chip is-wip"><span class="dot" aria-hidden="true"></span>In progress</span></span></div>
           <div class="project-grid">
             <div class="project-main">
-              <h2>I2C building blocks</h2>
-              <p>The pieces of an I2C interface, built one at a time. So far there is a shift register, with parallel and serial data in and out and a state machine that controls loading, shifting and completion, and an open-drain bus pad.</p>
+              <h2>I2C, built block by block</h2>
+              <p>I'm building the whole I2C protocol one block at a time, one block a week. Each block gets its own self-checking testbench for now.</p>
+              <p>The main attraction is still ahead: a UVM verification environment that verifies the complete protocol, growing as the blocks do.</p>
               <dl class="spec">
                 <div><dt>Language</dt><dd>SystemVerilog</dd></div>
-                <div><dt>Control</dt><dd>FSM with IDLE, LOAD, SHIFT and DONE states</dd></div>
+                <div><dt>Control</dt><dd>FSM with IDLE, LOAD, SHIFT and DONE states in the shift register</dd></div>
               </dl>
               <a class="repo" href="https://github.com/atanumondal7/i2c-building-blocks">View the repository</a>
             </div>
             <div class="project-side">
-              <h3>i2c_shift_register</h3>
-              <svg class="symbol" viewBox="0 0 380 232" role="img" aria-label="Block symbol of i2c_shift_register. Inputs: clk, rst_n, load, shift_en, direction, p_data_in, s_data_in. Outputs: p_data_out, s_data_out, byte_done.">
+              <div class="side-block">
+                <h3>roadmap</h3>
+                <ol class="roadmap">
+                  <li class="is-done"><span class="mark" aria-hidden="true"></span><span><span class="sr">Done: </span><b>Week 1</b> Open-drain bus pad, all 4 input combinations pass</span></li>
+                  <li class="is-done"><span class="mark" aria-hidden="true"></span><span><span class="sr">Done: </span><b>Week 2</b> Shift register, 116 checks, 0 errors</span></li>
+                  <li class="is-open"><span class="mark" aria-hidden="true"></span><span><span class="sr">Left: </span><b>Week 3</b> Protocol FSM</span></li>
+                  <li class="is-open"><span class="mark" aria-hidden="true"></span><span><span class="sr">Left: </span><b>Week 4</b> Address matcher</span></li>
+                  <li class="is-open is-main"><span class="mark" aria-hidden="true"></span><span><span class="sr">Left: </span><b>The main attraction</b> The UVM verification environment for the whole protocol</span></li>
+                </ol>
+              </div>
+              <div class="side-block">
+                <h3>i2c_shift_register</h3>
+                <svg class="symbol" viewBox="0 0 380 232" role="img" aria-label="Block symbol of i2c_shift_register. Inputs: clk, rst_n, load, shift_en, direction, p_data_in, s_data_in. Outputs: p_data_out, s_data_out, byte_done.">
               <rect class="body" x="112" y="14" width="140" height="204" rx="6"/>
               <text class="title" x="182" y="112" text-anchor="middle">i2c_shift_</text>
               <text class="title" x="182" y="126" text-anchor="middle">register</text>
@@ -176,12 +308,13 @@
                 <text x="304" y="184">byte_done</text>
               </g>
             </svg>
+              </div>
             </div>
           </div>
         </article>
 
       </div>
-      <p class="more-line">More testbenches, including a priority encoder and a decoder, are in <a href="https://github.com/atanumondal7/SystemVerilog-Workspace">SystemVerilog-Workspace</a>.</p>
+      <p class="more-line">More testbenches, including a priority encoder, a decoder and a FIFO buffer, are in <a href="https://github.com/atanumondal7/SystemVerilog-Workspace">SystemVerilog-Workspace</a>.</p>
     </div>
 
   </main>

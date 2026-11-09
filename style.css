@@ -1483,3 +1483,243 @@ html:has(dialog[open]) { overflow: hidden; }
   .pw-in > li { grid-template-columns: minmax(0, 1fr); gap: 12px; padding: 20px; }
   .lb-stage { padding: 14px; min-height: 220px; }
 }
+
+/* =====================================================================
+   Projects: verification ladder and richer side panels
+   ===================================================================== */
+
+.project code, .ladder code, .note code {
+  padding: 1px 6px;
+  border: 1px solid var(--line-2);
+  border-radius: 4px;
+  background: var(--surface-2);
+  font: 500 0.84em var(--mono);
+  color: var(--text);
+}
+
+.bar-right { display: inline-flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 8px; }
+
+.rung-chip { color: var(--signal); border-color: rgba(122, 168, 255, 0.4); }
+.rung-chip .rn {
+  display: inline-grid;
+  place-items: center;
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  background: var(--signal);
+  color: var(--bg);
+  font-size: 0.68rem;
+  font-weight: 700;
+}
+
+/* the ladder: a waveform that steps up once per method */
+
+.ladder { margin-bottom: 28px; }
+.ladder-in { padding: 28px 28px 0; }
+.ladder-in h2 { margin-bottom: 6px; font-size: 1.5rem; }
+.ladder-in .lede { margin: 0 0 8px; max-width: 40em; }
+
+.rungs {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  align-items: end;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.rung {
+  position: relative;
+  min-height: calc(112px + var(--h) * 44px);
+  padding: 14px 16px 22px;
+  border-top: 2px solid var(--signal);
+  border-left: 2px solid var(--signal);
+  background: linear-gradient(180deg, rgba(122, 168, 255, 0.1), rgba(122, 168, 255, 0.02));
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.rung:last-child { border-right: 2px solid var(--signal); }
+
+.rung .rn { font: 700 0.78rem var(--mono); color: var(--signal); }
+.rung h3 { font-size: 1rem; letter-spacing: -0.01em; }
+.rung p { margin: 0 0 6px; color: var(--muted); font-size: 0.86rem; line-height: 1.5; }
+
+.rung a {
+  align-self: flex-start;
+  color: var(--amber);
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-underline-offset: 4px;
+}
+
+.rung a:hover { color: #ffd47f; }
+
+.rung.is-next {
+  border-color: var(--amber);
+  border-style: dashed;
+  background:
+    repeating-linear-gradient(135deg, rgba(255, 200, 87, 0.12) 0 6px, rgba(255, 200, 87, 0) 6px 12px),
+    var(--surface);
+}
+
+.rung.is-next .rn { color: var(--amber); }
+
+/* side panels */
+
+.project-side { justify-content: flex-start; gap: 0; padding: 0; }
+
+.side-block { padding: 20px 28px; border-bottom: 1px solid var(--line); }
+.side-block:last-child { border-bottom: 0; }
+.side-block h3 { margin: 0 0 12px; }
+
+.side-block .big-number { margin-bottom: 12px; }
+.side-block .meter { margin-top: 12px; }
+
+.note { margin: 12px 0 0; color: var(--muted); font-size: 0.84rem; line-height: 1.55; }
+.note a { color: var(--text); text-underline-offset: 3px; }
+.note a:hover { color: var(--amber); }
+
+/* UART frame */
+
+.frame {
+  display: grid;
+  grid-template-columns: repeat(10, minmax(0, 1fr));
+  gap: 3px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.frame li {
+  display: grid;
+  place-items: center;
+  height: 38px;
+  border: 1px solid var(--line-2);
+  border-radius: 4px;
+  background: var(--surface);
+  font: 500 0.66rem var(--mono);
+  color: var(--muted);
+}
+
+.frame li b { font-weight: 500; }
+.frame .f-start { border-color: var(--signal); color: var(--signal); }
+
+.frame .f-stop {
+  border-color: var(--x);
+  color: var(--x);
+  background:
+    repeating-linear-gradient(135deg, rgba(255, 122, 122, 0.22) 0 4px, rgba(255, 122, 122, 0) 4px 8px),
+    var(--surface);
+}
+
+/* UVM tree */
+
+.tree-view {
+  margin: 0;
+  overflow-x: auto;
+  font: 500 0.8rem/1.65 var(--mono);
+  color: var(--muted);
+}
+
+.tree-view .n { color: var(--signal); font-weight: 600; }
+.tree-view .c { color: var(--muted); opacity: 0.75; margin-left: 4px; }
+
+/* coverage bins */
+
+.bins { display: grid; gap: 9px; margin: 0; padding: 0; list-style: none; font: 500 0.8rem var(--mono); }
+
+.bins li { display: grid; grid-template-columns: 8.4rem minmax(0, 1fr) 2.2rem; align-items: center; gap: 12px; }
+.bins .k { color: var(--muted); white-space: nowrap; }
+.bins .v { color: var(--pass); text-align: right; }
+.bins .bar { height: 10px; border-radius: 5px; background: var(--bg); border: 1px solid var(--line-2); overflow: hidden; }
+.bins .bar > span { display: block; height: 100%; width: calc(var(--w) / 46 * 100%); background: var(--pass); transform-origin: left; }
+
+.js [data-reveal]:not(.is-in) .bins .bar > span { transform: scaleX(0); }
+[data-reveal].is-in .bins .bar > span { transform: scaleX(1); transition: transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) 0.2s; }
+
+/* branches and bins that are not hit yet */
+
+.lanes { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; font-size: 0.92rem; }
+.lanes li { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; }
+.lanes .chip { min-width: 7.5rem; }
+
+.hits { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin: 0; padding: 0; list-style: none; }
+
+.hit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 6px 12px;
+  border: 1.5px solid var(--pass);
+  border-radius: 6px;
+  background: rgba(111, 227, 165, 0.08);
+  font: 500 0.8rem var(--mono);
+  color: var(--pass);
+}
+
+.hit.is-x {
+  border-color: var(--x);
+  color: var(--x);
+  background:
+    repeating-linear-gradient(135deg, rgba(255, 122, 122, 0.2) 0 5px, rgba(255, 122, 122, 0) 5px 10px),
+    var(--surface);
+}
+
+/* roadmap */
+
+.roadmap { display: grid; gap: 4px; margin: 0; padding: 0; list-style: none; font-size: 0.92rem; }
+
+.roadmap li {
+  display: grid;
+  grid-template-columns: 12px minmax(0, 1fr);
+  gap: 12px;
+  padding: 7px 0;
+}
+
+.roadmap .mark { width: 10px; height: 10px; margin-top: 8px; border-radius: 50%; background: var(--pass); }
+.roadmap .is-open .mark { background: transparent; border: 2px solid var(--amber); }
+.roadmap .is-open { color: var(--muted); }
+.roadmap b { display: block; color: var(--text); font-weight: 600; }
+.roadmap .is-open b { color: var(--amber); }
+
+.roadmap .is-main {
+  margin-top: 6px;
+  padding: 12px 14px;
+  border: 1.5px dashed var(--amber);
+  border-radius: 8px;
+  background:
+    repeating-linear-gradient(135deg, rgba(255, 200, 87, 0.1) 0 6px, rgba(255, 200, 87, 0) 6px 12px),
+    var(--surface);
+  color: var(--text);
+}
+
+.roadmap .is-main .mark { margin-top: 6px; }
+
+@media (max-width: 1000px) {
+  .ladder-in { padding: 24px 20px 0; }
+
+  .rungs { grid-template-columns: minmax(0, 1fr); gap: 0; padding-bottom: 0; }
+
+  .rung {
+    min-height: 0;
+    padding: 16px 16px 18px 20px;
+    border-top: 0;
+    border-right: 0;
+    border-left: 3px solid var(--signal);
+    background: none;
+  }
+
+  .rung:last-child { border-right: 0; }
+  .rung + .rung { border-top: 1px solid var(--line); }
+  .rung.is-next { border-left-style: dashed; }
+}
+
+@media (max-width: 640px) {
+  .side-block { padding: 18px 20px; }
+  .bins li { grid-template-columns: 6.6rem minmax(0, 1fr) 1.8rem; gap: 8px; }
+  .frame li { height: 32px; font-size: 0.6rem; }
+  .bar-right { justify-content: flex-start; }
+}
