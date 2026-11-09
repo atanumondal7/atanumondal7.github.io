@@ -193,6 +193,8 @@ h3 {
   view-transition-name: tab-ind;
 }
 
+.chrome-btns { display: flex; align-items: center; gap: 8px; }
+
 .chrome .mail {
   align-self: center;
   padding: 7px 14px;
@@ -1124,8 +1126,8 @@ html:not(.js) .skill-more > div { visibility: visible; }
 
 @media (max-width: 640px) {
   .chrome-in { flex-wrap: wrap; gap: 0 12px; min-height: 0; padding: 0 18px; }
-  .brand, .chrome .mail { margin: 10px 0; }
-  .chrome .mail { margin-left: auto; }
+  .brand, .chrome-btns { margin: 10px 0; }
+  .chrome-btns { margin-left: auto; }
 
   .tabs {
     order: 3;
