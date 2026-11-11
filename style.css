@@ -1727,3 +1727,38 @@ html:has(dialog[open]) { overflow: hidden; }
 }
 
 .chip.is-sem { color: var(--signal); border-color: rgba(122, 168, 255, 0.4); }
+
+/* a path or course that is not completed yet */
+
+.hexseal.is-x {
+  background: var(--x);
+}
+
+.hexseal.is-x > span {
+  background:
+    repeating-linear-gradient(135deg, rgba(255, 122, 122, 0.22) 0 4px, rgba(255, 122, 122, 0) 4px 8px),
+    var(--surface);
+  color: var(--x);
+}
+
+.is-pending .cred-meta .chip { margin: 0; }
+
+.cred-path.is-pending { border-left-color: var(--line-2); border-left-style: dashed; }
+.cred-path.is-pending .hexseal > span { color: var(--x); }
+
+.progress { display: grid; gap: 8px; max-width: 24rem; }
+.progress .cred-meta { margin: 0; }
+
+.segs {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.segs li { height: 8px; border-radius: 4px; background: var(--bg); border: 1px solid var(--line-2); }
+.segs li.on { background: var(--pass); border-color: var(--pass); }
+
+.tree > li.is-pending { border-style: dashed; }
