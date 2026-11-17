@@ -4,14 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Projects | Atanu Mondal</title>
-  <script src="site.js?v=4"></script>
+  <script src="site.js?v=5"></script>
   <meta name="description" content="RTL designs and verification testbenches by Atanu Mondal, a first-semester student: a UART with a UVM testbench, an ALU with coverage-driven verification, and more.">
   <meta name="theme-color" content="#0a0e17">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230a0e17'/%3E%3Cpath d='M4 22h6V10h8v12h6V10h4' fill='none' stroke='%23ffc857' stroke-width='2.6'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=4">
+  <link rel="stylesheet" href="style.css?v=5">
 </head>
 <body>
 
@@ -54,31 +54,32 @@
           <h2 id="ladder-h">The verification ladder</h2>
           <p class="lede">Each project is one rung up. I started with directed tests and I'm now writing UVM, all in my first semester.</p>
           <ol class="rungs">
-            <li class="rung" style="--h: 1">
+            <li class="rung" style="--h: 1; --i: 0">
               <span class="rn">1</span>
               <h3>Directed tests</h3>
               <p>Hand-written stimulus for small blocks such as adders, counters and a traffic light.</p>
               <a href="https://github.com/atanumondal7/SystemVerilog-Workspace/tree/main/basics">basics</a>
             </li>
-            <li class="rung" style="--h: 2">
+            <li class="rung" style="--h: 2; --i: 1">
               <span class="rn">2</span>
               <h3>Constrained-random and coverage</h3>
               <p>My first time with rand, constraints, covergroups and interfaces.</p>
               <a href="#alu">4-bit ALU</a>
             </li>
-            <li class="rung" style="--h: 3">
+            <li class="rung" style="--h: 3; --i: 2">
               <span class="rn">3</span>
               <h3>Layered testbench</h3>
               <p>Generator, driver, monitor and scoreboard in classes, wired with mailboxes.</p>
               <a href="#usr">Shift register</a><a href="#alarm-clock">Alarm clock</a>
             </li>
-            <li class="rung" style="--h: 4">
+            <li class="rung is-here" style="--h: 4; --i: 3">
+              <span class="here" aria-hidden="true">You are here</span>
               <span class="rn">4</span>
               <h3>UVM</h3>
               <p>Agent, sequencer, scoreboard with a reference model, coverage and assertions.</p>
               <a href="#uart">UART</a>
             </li>
-            <li class="rung is-next" style="--h: 5">
+            <li class="rung is-next" style="--h: 5; --i: 4">
               <span class="rn">5</span>
               <h3>UVM across a protocol</h3>
               <p>An environment that grows block by block until it verifies I2C.</p>

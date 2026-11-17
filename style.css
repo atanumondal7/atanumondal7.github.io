@@ -1762,3 +1762,202 @@ html:has(dialog[open]) { overflow: hidden; }
 .segs li.on { background: var(--pass); border-color: var(--pass); }
 
 .tree > li.is-pending { border-style: dashed; }
+
+/* =====================================================================
+   Verification ladder v2: grid, rising steps, travelling pulse
+   ===================================================================== */
+
+.ladder-in {
+  position: relative;
+  background-image: linear-gradient(90deg, rgba(44, 59, 87, 0.35) 1px, transparent 1px);
+  background-size: 20% 100%;
+}
+
+.ladder-in > * { position: relative; }
+
+.rungs { counter-reset: none; padding-top: 56px; }
+
+.rung {
+  --lift: 0px;
+  isolation: isolate;
+  transform: translateY(var(--lift));
+  transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.35s ease, opacity 0.3s ease, background-color 0.3s ease;
+  background:
+    linear-gradient(180deg, rgba(122, 168, 255, calc(0.08 + var(--h) * 0.035)), rgba(122, 168, 255, 0.02) 70%),
+    var(--surface);
+}
+
+/* hexagon numerals */
+
+.rung .rn {
+  display: inline-grid;
+  place-items: center;
+  width: 32px;
+  height: 36px;
+  margin-bottom: 6px;
+  clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+  background: var(--signal);
+  color: var(--signal);
+  font: 700 0.82rem var(--mono);
+  position: relative;
+}
+
+.rung .rn::before {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  clip-path: inherit;
+  background: var(--bg);
+  z-index: -1;
+}
+
+.rung .rn::after { content: none; }
+.rung .rn { isolation: isolate; }
+
+/* edge pulses: a bright spot climbs each riser, then runs along the tread */
+
+.rung::before,
+.rung::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.rung::before {
+  left: -2px;
+  right: -2px;
+  top: -2px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #dbe8ff 50%, transparent) no-repeat;
+  background-size: 35% 100%;
+  background-position: -60% 0;
+  animation: tread 9s linear infinite;
+  animation-delay: calc(var(--i) * 1.2s + 1.6s);
+}
+
+.rung::after {
+  left: -2px;
+  top: -2px;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(0deg, transparent, #dbe8ff 50%, transparent) no-repeat;
+  background-size: 100% 35%;
+  background-position: 0 160%;
+  animation: riser 9s linear infinite;
+  animation-delay: calc(var(--i) * 1.2s + 1.6s);
+}
+
+@keyframes riser {
+  0% { background-position: 0 160%; }
+  7% { background-position: 0 -60%; }
+  100% { background-position: 0 -60%; }
+}
+
+@keyframes tread {
+  0%, 6% { background-position: -60% 0; }
+  15% { background-position: 160% 0; }
+  100% { background-position: 160% 0; }
+}
+
+.rung.is-next::before { background-image: linear-gradient(90deg, transparent, #fff0cc 50%, transparent); }
+.rung.is-next::after { background-image: linear-gradient(0deg, transparent, #fff0cc 50%, transparent); }
+
+/* the step I am on, and the one I am building */
+
+.rung.is-here {
+  background:
+    linear-gradient(180deg, rgba(122, 168, 255, 0.28), rgba(122, 168, 255, 0.04) 75%),
+    var(--surface);
+}
+
+.here {
+  position: absolute;
+  left: 14px;
+  top: -34px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--amber);
+  color: var(--bg);
+  font: 700 0.7rem/1.4 var(--mono);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  animation: bob 2.2s ease-in-out infinite;
+  z-index: 3;
+}
+
+.here::after {
+  content: "";
+  position: absolute;
+  left: 18px;
+  bottom: -5px;
+  width: 10px;
+  height: 10px;
+  background: var(--amber);
+  transform: rotate(45deg);
+  border-radius: 2px;
+}
+
+@keyframes bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+.rung.is-next {
+  background:
+    repeating-linear-gradient(135deg, rgba(255, 200, 87, 0.16) 0 6px, rgba(255, 200, 87, 0) 6px 12px),
+    linear-gradient(180deg, rgba(255, 200, 87, 0.1), rgba(255, 200, 87, 0.02)),
+    var(--surface);
+  background-size: auto, auto, auto;
+  animation: march 1.6s linear infinite;
+}
+
+.rung.is-next .rn { background: var(--amber); color: var(--amber); }
+
+@keyframes march {
+  from { background-position: 0 0, 0 0, 0 0; }
+  to { background-position: 16.97px 0, 0 0, 0 0; }
+}
+
+/* reveal: each step rises in turn */
+
+.js [data-reveal]:not(.is-in) .rung { clip-path: inset(100% -40px 0 -40px); }
+.js [data-reveal]:not(.is-in) .here { opacity: 0; }
+
+[data-reveal].is-in .rung {
+  clip-path: inset(-44px -40px 0 -40px);
+  transition:
+    clip-path 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) calc(var(--i) * 0.17s + 0.1s),
+    transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1),
+    box-shadow 0.35s ease,
+    opacity 0.3s ease;
+}
+
+[data-reveal].is-in .here { opacity: 1; transition: opacity 0.4s ease 1.2s; }
+
+/* hover and keyboard focus: one step lifts, the rest dim */
+
+@media (hover: hover) {
+  .rungs:hover .rung { opacity: 0.55; }
+  .rungs .rung:hover { opacity: 1; --lift: -8px; box-shadow: 0 14px 34px -14px rgba(122, 168, 255, 0.55); }
+  .rungs .rung.is-next:hover { box-shadow: 0 14px 34px -14px rgba(255, 200, 87, 0.5); }
+}
+
+.rungs:focus-within .rung:not(:focus-within) { opacity: 0.55; }
+
+@media (max-width: 1000px) {
+  .rungs { padding-top: 0; }
+  .ladder-in { background-image: none; }
+  .rung::before { display: none; }
+  .rung::after { left: -3px; width: 3px; }
+  .here { position: static; align-self: flex-start; margin-bottom: 8px; animation: none; }
+  .here::after { display: none; }
+  .js [data-reveal]:not(.is-in) .rung { clip-path: inset(0 100% 0 -40px); }
+  [data-reveal].is-in .rung { clip-path: inset(0 -40px 0 -40px); }
+  .rungs:hover .rung { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rung, .rung::before, .rung::after, .here, .rung.is-next { animation: none !important; transition: none !important; }
+  .js [data-reveal]:not(.is-in) .rung { clip-path: none; }
+}
