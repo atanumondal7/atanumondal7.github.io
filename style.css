@@ -1961,3 +1961,113 @@ html:has(dialog[open]) { overflow: hidden; }
   .rung, .rung::before, .rung::after, .here, .rung.is-next { animation: none !important; transition: none !important; }
   .js [data-reveal]:not(.is-in) .rung { clip-path: none; }
 }
+
+/* =====================================================================
+   Certifications: wiring that energizes, cards that arrive in turn
+   ===================================================================== */
+
+.segs { grid-template-columns: repeat(var(--n, 5), minmax(0, 1fr)); }
+
+/* hover */
+
+.cred { transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1); }
+
+.cards.two > .cred:hover {
+  transform: translateY(-4px);
+  border-color: rgba(122, 168, 255, 0.45);
+  box-shadow: 0 16px 36px -18px rgba(122, 168, 255, 0.5);
+}
+
+.tree > li.cred-child:not(.is-pending):hover {
+  border-color: rgba(122, 168, 255, 0.45);
+  box-shadow: 0 12px 30px -16px rgba(122, 168, 255, 0.5);
+}
+
+/* wiring between a path and its courses: draws in, then a pulse runs down it */
+
+.tree > li::before {
+  background: linear-gradient(180deg, transparent, #dbe8ff 50%, transparent) no-repeat, var(--line-2);
+  background-size: 100% 40%, auto;
+  background-position: 0 -60%, 0 0;
+  transform-origin: top;
+  transition: transform 0.5s ease 0.05s;
+  animation: trunk 8s linear infinite;
+  animation-delay: calc(var(--i) * 0.8s + 2s);
+}
+
+.tree > li::after {
+  transform-origin: left;
+  transition: transform 0.3s ease 0.4s;
+}
+
+@keyframes trunk {
+  0% { background-position: 0 -60%, 0 0; }
+  12% { background-position: 0 160%, 0 0; }
+  100% { background-position: 0 160%, 0 0; }
+}
+
+.js .tree > li[data-reveal]:not(.is-in)::before { transform: scaleY(0); }
+.js .tree > li[data-reveal]:not(.is-in)::after { transform: scaleX(0); }
+
+/* arrival */
+
+.js .tree > li[data-reveal]:not(.is-in),
+.js .cards.two > [data-reveal]:not(.is-in) { opacity: 0; }
+
+.tree > li.is-in { animation: slide-in 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) calc(var(--i) * 0.09s + 0.15s) backwards; }
+.cards.two > .cred.is-in { animation: rise 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) calc(var(--i) * 0.1s) backwards; }
+
+@keyframes slide-in { from { opacity: 0; transform: translateX(-22px); } }
+@keyframes rise { from { opacity: 0; transform: translateY(22px); } }
+
+/* hexagon seals pop in, then complete paths breathe */
+
+.js [data-reveal]:not(.is-in) .cred-seal { opacity: 0; }
+[data-reveal].is-in .cred-seal { animation: pop 0.6s cubic-bezier(0.3, 1.6, 0.5, 1) 0.2s backwards; }
+
+@keyframes pop { from { opacity: 0; transform: scale(0.4) rotate(-24deg); } }
+
+.cred-path:not(.is-pending) .hexseal { animation: glow 3.4s ease-in-out infinite; }
+
+@keyframes glow {
+  0%, 100% { filter: drop-shadow(0 0 0 rgba(255, 200, 87, 0)); }
+  50% { filter: drop-shadow(0 0 12px rgba(255, 200, 87, 0.55)); }
+}
+
+/* progress segments fill one by one; the next one blinks */
+
+.js [data-reveal]:not(.is-in) .segs li.on { background: var(--bg); border-color: var(--line-2); }
+[data-reveal].is-in .segs li.on { animation: segfill 0.45s ease calc(var(--k) * 0.16s + 0.6s) backwards; }
+
+@keyframes segfill { from { background: var(--bg); border-color: var(--line-2); transform: scaleX(0.5); } }
+
+.segs li.on + li:not(.on) { border-color: var(--amber); animation: segwait 1.6s ease-in-out 1.6s infinite; }
+
+@keyframes segwait {
+  0%, 100% { background: var(--bg); }
+  50% { background: rgba(255, 200, 87, 0.55); }
+}
+
+/* courses still to come: the stripes drift, and the next one is lit */
+
+.hexseal.is-x > span { animation: drift 2.4s linear infinite; }
+
+@keyframes drift {
+  from { background-position: 0 0, 0 0; }
+  to { background-position: 11.31px 0, 0 0; }
+}
+
+.tree > li:not(.is-pending) + li.is-pending { border-color: rgba(255, 200, 87, 0.55); }
+.tree > li:not(.is-pending) + li.is-pending .hexseal { animation: nextseal 2.4s ease-in-out infinite; }
+
+@keyframes nextseal {
+  0%, 100% { filter: drop-shadow(0 0 0 rgba(255, 122, 122, 0)); }
+  50% { filter: drop-shadow(0 0 10px rgba(255, 122, 122, 0.6)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cred, .tree > li, .tree > li::before, .tree > li::after,
+  .cred-seal, .hexseal, .hexseal > span, .segs li { animation: none !important; transition: none !important; }
+}
+
+.cred-main > .progress { margin-bottom: 18px; }
