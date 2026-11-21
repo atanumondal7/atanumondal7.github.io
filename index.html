@@ -4,14 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Atanu Mondal | VLSI Design and Verification</title>
-  <script src="site.js?v=6"></script>
+  <script src="site.js?v=7"></script>
   <meta name="description" content="Atanu Mondal, a B.Tech student in VLSI design. SystemVerilog RTL, UVM testbenches and coverage-driven verification.">
   <meta name="theme-color" content="#0a0e17">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230a0e17'/%3E%3Cpath d='M4 22h6V10h8v12h6V10h4' fill='none' stroke='%23ffc857' stroke-width='2.6'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=6">
+  <link rel="stylesheet" href="style.css?v=7">
 </head>
 <body>
 
@@ -97,7 +97,7 @@
     </section>
 
     <div class="wrap intro">
-      <div>
+      <div data-reveal style="--i:0">
         <p class="lead">I write digital designs in SystemVerilog and develop the testbenches that verify them, from coverage-driven benches to UVM environments. I taught myself the field from gate-level logic upward, and I like knowing why a circuit behaves the way it does.</p>
         <div class="actions">
           <a class="btn primary" href="projects.html">View projects</a>
@@ -106,7 +106,7 @@
           <a class="btn" href="https://www.linkedin.com/in/atanu-mondal7" target="_blank" rel="noopener">LinkedIn<span class="sr"> (opens in a new tab)</span></a>
         </div>
       </div>
-      <aside class="edu" aria-labelledby="edu-h">
+      <aside class="edu" aria-labelledby="edu-h" data-reveal style="--i:1">
         <h2 id="edu-h">Education</h2>
         <p class="edu-degree">B.Tech in Electronics</p>
         <p class="edu-spec">Specialization in VLSI Design and Technology</p>
@@ -119,14 +119,15 @@
 
     <section class="section" aria-labelledby="results-h">
       <div class="wrap">
+        <div class="eyebrow" data-reveal aria-hidden="true"><b>01</b><i></i><span>results</span></div>
         <h2 id="results-h">Results</h2>
         <p class="lede">What my verification work has produced so far.</p>
         <div class="panel" data-reveal>
           <div class="panel-bar"><span>results.log</span></div>
           <ul class="log-lines">
-            <li style="--i:0"><span class="pass">PASS</span><span class="what"><a href="projects.html#uart">UART loopback with a UVM testbench</a></span><span class="val">1000 / 1000 transactions</span></li>
-            <li style="--i:1"><span class="pass">PASS</span><span class="what"><a href="projects.html#alu">4-bit ALU, coverage-driven testbench</a></span><span class="val">100% functional coverage</span></li>
-            <li style="--i:2"><span class="pass">PASS</span><span class="what"><a href="badges.html">Siemens SystemVerilog UVM pathway</a></span><span class="val">3 exams passed</span></li>
+            <li style="--i:0"><span class="pass">PASS</span><span class="what"><a href="projects.html#uart">UART loopback with a UVM testbench</a></span><span class="val"><span data-count="1000">1000</span> / 1000 transactions</span></li>
+            <li style="--i:1"><span class="pass">PASS</span><span class="what"><a href="projects.html#alu">4-bit ALU, coverage-driven testbench</a></span><span class="val"><span data-count="100">100</span>% functional coverage</span></li>
+            <li style="--i:2"><span class="pass">PASS</span><span class="what"><a href="badges.html">Siemens SystemVerilog UVM pathway</a></span><span class="val"><span data-count="3">3</span> exams passed</span></li>
           </ul>
         </div>
       </div>
@@ -134,6 +135,7 @@
 
     <section class="section" id="skills" aria-labelledby="skills-h">
       <div class="wrap">
+        <div class="eyebrow" data-reveal aria-hidden="true"><b>02</b><i></i><span>skills</span></div>
         <h2 id="skills-h">Skills</h2>
         <p class="lede">Laid out as the testbench I would build around a design. Select a block, or a skill in the list, to see where I've used it.</p>
 
@@ -141,7 +143,7 @@
           <div class="panel-bar"><span>skills.tb</span></div>
           <div class="skills-grid">
 
-            <div class="tb-wrap">
+            <div class="tb-wrap" data-reveal>
               <svg class="tb" viewBox="0 0 760 430" role="group" aria-label="Skills drawn as a UVM testbench around a design under test. The same skills are listed beside the diagram.">
                 <defs>
                   <marker id="ah" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="arrow" d="M0 0L8 4L0 8z"/></marker>
@@ -343,13 +345,14 @@
 
     <section class="section" aria-labelledby="explore-h">
       <div class="wrap">
+        <div class="eyebrow" data-reveal aria-hidden="true"><b>03</b><i></i><span>explore</span></div>
         <h2 id="explore-h">Explore</h2>
         <p class="lede">The rest of the work, one tab at a time.</p>
         <ul class="explore">
-          <li><a href="projects.html"><span class="name">Projects</span><span class="desc">RTL designs and the testbenches built to verify them.</span><span class="meta">5 builds</span></a></li>
-          <li><a href="certifications.html"><span class="name">Certifications</span><span class="desc">Courses I've completed, with a certificate for each.</span><span class="meta">9 certificates</span></a></li>
-          <li><a href="badges.html"><span class="name">Badges</span><span class="desc">Siemens and IBM badges, each verifiable on Credly.</span><span class="meta">5 badges</span></a></li>
-          <li><a href="journey.html"><span class="name">Journey</span><span class="desc">From logic gates to a UVM environment, one level of abstraction at a time.</span><span class="meta">6 stages</span></a></li>
+          <li data-reveal style="--i:0"><a href="projects.html"><span class="name">Projects</span><span class="desc">RTL designs and the testbenches built to verify them.</span><span class="meta">5 builds</span></a></li>
+          <li data-reveal style="--i:1"><a href="certifications.html"><span class="name">Certifications</span><span class="desc">Courses I've completed, with a certificate for each.</span><span class="meta">9 certificates</span></a></li>
+          <li data-reveal style="--i:2"><a href="badges.html"><span class="name">Badges</span><span class="desc">Siemens and IBM badges, each verifiable on Credly.</span><span class="meta">5 badges</span></a></li>
+          <li data-reveal style="--i:3"><a href="journey.html"><span class="name">Journey</span><span class="desc">From logic gates to a UVM environment, one level of abstraction at a time.</span><span class="meta">6 stages</span></a></li>
         </ul>
       </div>
     </section>

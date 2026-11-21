@@ -2071,3 +2071,299 @@ html:has(dialog[open]) { overflow: hidden; }
 }
 
 .cred-main > .progress { margin-bottom: 18px; }
+
+/* =====================================================================
+   Motion pass: overview, badges and journey
+   ===================================================================== */
+
+/* a slow glow drifting behind every page */
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: -20%;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(40% 35% at 18% 14%, rgba(122, 168, 255, 0.11), transparent 70%),
+    radial-gradient(34% 30% at 86% 72%, rgba(255, 200, 87, 0.07), transparent 70%);
+  animation: aurora 28s ease-in-out infinite alternate;
+}
+
+@keyframes aurora { to { transform: translate3d(4%, 3%, 0) scale(1.06); } }
+
+[data-site="offline"] body::before { display: none; }
+
+/* status dots breathe */
+
+.chip.is-wip .dot,
+.chip.is-pass .dot { animation: ping 2.4s ease-out infinite; }
+
+@keyframes ping {
+  0% { box-shadow: 0 0 0 0 color-mix(in srgb, currentColor 55%, transparent); }
+  70%, 100% { box-shadow: 0 0 0 7px transparent; }
+}
+
+/* ---------- overview ---------- */
+
+.eyebrow { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; font: 600 0.78rem var(--mono); color: var(--amber); }
+.eyebrow span { color: var(--muted); font-weight: 500; }
+.eyebrow i { flex: 0 0 56px; height: 1px; background: var(--amber); transform-origin: left; transition: transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) 0.1s; }
+.js .eyebrow:not(.is-in) i { transform: scaleX(0); }
+.js .eyebrow:not(.is-in) b, .js .eyebrow:not(.is-in) span { opacity: 0; }
+.eyebrow b, .eyebrow span { transition: opacity 0.5s ease 0.1s; }
+
+.log-lines .val { font-variant-numeric: tabular-nums; }
+
+.js .intro > [data-reveal]:not(.is-in) { opacity: 0; }
+.intro > .is-in { animation: rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) calc(var(--i) * 0.12s) backwards; }
+
+.edu { position: relative; overflow: hidden; }
+
+.edu::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 2px;
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent, #ffe3a3 50%, transparent) no-repeat;
+  background-size: 35% 100%;
+  background-position: -60% 0;
+  animation: tread 9s linear infinite 2s;
+}
+
+.js .tb-wrap:not(.is-in) .node,
+.js .tb-wrap:not(.is-in) .group { opacity: 0; }
+
+.tb-wrap.is-in .node { transform-box: fill-box; transform-origin: center; animation: node-in 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) backwards; }
+.tb-wrap.is-in .group { animation: node-in 0.6s ease backwards; }
+.tb-wrap.is-in [data-node="test"] { animation-delay: 0.1s; }
+.tb-wrap.is-in .group { animation-delay: 0.2s; }
+.tb-wrap.is-in [data-node="agent"] { animation-delay: 0.3s; }
+.tb-wrap.is-in [data-node="sequencer"] { animation-delay: 0.5s; }
+.tb-wrap.is-in [data-node="scoreboard"] { animation-delay: 0.7s; }
+.tb-wrap.is-in [data-node="coverage"] { animation-delay: 0.8s; }
+.tb-wrap.is-in [data-node="dut"] { animation-delay: 1s; }
+.tb-wrap.is-in [data-node="gates"] { animation-delay: 1.2s; }
+.tb-wrap.is-in [data-node="circuits"] { animation-delay: 1.3s; }
+.tb-wrap.is-in [data-node="physics"] { animation-delay: 1.4s; }
+
+@keyframes node-in { from { opacity: 0; transform: scale(0.92); } }
+
+.js .explore li[data-reveal]:not(.is-in) { opacity: 0; }
+.explore li.is-in { animation: rise 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) calc(var(--i) * 0.08s) backwards; }
+
+.explore .meta::after {
+  content: "\2192";
+  display: inline-block;
+  margin-left: 8px;
+  opacity: 0;
+  transform: translateX(-8px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.explore a:hover .meta::after,
+.explore a:focus-visible .meta::after { opacity: 1; transform: none; }
+
+/* ---------- badges ---------- */
+
+.pathway-grid {
+  background-image: linear-gradient(90deg, rgba(44, 59, 87, 0.22) 1px, transparent 1px);
+  background-size: 10% 100%;
+}
+
+.js .pw-in > li[data-reveal]:not(.is-in) { opacity: 0; }
+.pw-in > li.is-in { animation: slide-in 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) calc(var(--i) * 0.14s) backwards; }
+
+.js .pw-out[data-reveal]:not(.is-in),
+.js .badges > li[data-reveal]:not(.is-in) { opacity: 0; }
+.pw-out.is-in { animation: rise 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) 0.9s backwards; }
+.badges > li.is-in { animation: rise 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) backwards; }
+
+.js [data-reveal]:not(.is-in) > .hexbadge { opacity: 0; }
+[data-reveal].is-in > .hexbadge { animation: pop 0.7s cubic-bezier(0.3, 1.6, 0.5, 1) 0.15s backwards; }
+.pw-out.is-in > .hexbadge { animation-delay: 1s; }
+
+/* a glint crosses each badge now and then */
+
+.hexbadge > .in { position: relative; overflow: hidden; }
+
+.hexbadge > .in::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(115deg, transparent 38%, rgba(255, 255, 255, 0.22) 50%, transparent 62%);
+  transform: translateX(-130%);
+  animation: glint 6s ease-in-out infinite;
+  animation-delay: calc(var(--i, 0) * 0.7s + 2s);
+}
+
+@keyframes glint { 0%, 55% { transform: translateX(-130%); } 80%, 100% { transform: translateX(130%); } }
+
+/* current flows through the wires; when all three arrive the gate lights up */
+
+.pw-flow path,
+.pw-flow-out {
+  fill: none;
+  stroke: #dbe8ff;
+  stroke-width: 2;
+  stroke-dasharray: 3 15;
+  stroke-linecap: round;
+  opacity: 0;
+}
+
+.pw-flow-out { stroke: #ffe3a3; }
+
+.pathway.is-in .pw-flow path { opacity: 0.9; animation: flow 1.1s linear infinite 1.1s backwards; transition: opacity 0.5s ease 1.1s; }
+.pathway.is-in .pw-flow-out { animation: flow 0.9s linear infinite, outlit 6s ease-in-out infinite 1.6s; }
+
+@keyframes flow { to { stroke-dashoffset: -18; } }
+
+@keyframes outlit {
+  0%, 44% { opacity: 0; }
+  52%, 86% { opacity: 1; }
+  96%, 100% { opacity: 0; }
+}
+
+.pathway.is-in .pw-body { animation: gatelit 6s ease-in-out infinite 1.6s; }
+
+@keyframes gatelit {
+  0%, 40% { stroke: var(--signal); filter: none; }
+  50%, 86% { stroke: var(--amber); filter: drop-shadow(0 0 6px rgba(255, 200, 87, 0.7)); }
+  100% { stroke: var(--signal); filter: none; }
+}
+
+.pathway.is-in .pw-gate text { animation: gatetext 6s ease-in-out infinite 1.6s; }
+
+@keyframes gatetext {
+  0%, 44%, 100% { fill: var(--text); }
+  54%, 86% { fill: var(--amber); }
+}
+
+.pathway.is-in .pw-out .hexbadge { animation: pop 0.7s cubic-bezier(0.3, 1.6, 0.5, 1) 1s backwards; }
+
+.pathway.is-in .pw-out::before {
+  content: "";
+  position: absolute;
+  width: 150px;
+  height: 168px;
+  top: 28px;
+  left: calc(50% + 0px);
+  margin-left: -75px;
+  clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+  background: var(--amber);
+  opacity: 0;
+  pointer-events: none;
+  animation: halo 6s ease-out infinite 1.6s;
+}
+
+.pw-out { position: relative; }
+.pw-out > * { position: relative; }
+
+@keyframes halo {
+  0%, 48% { opacity: 0; transform: scale(1); }
+  54% { opacity: 0.4; transform: scale(1); }
+  90%, 100% { opacity: 0; transform: scale(1.7); }
+}
+
+.badges > li.badge { transition: border-color 0.3s ease, box-shadow 0.3s ease; }
+.badges > li.badge:hover { border-color: rgba(122, 168, 255, 0.45); box-shadow: 0 16px 36px -18px rgba(122, 168, 255, 0.5); }
+
+/* ---------- journey ---------- */
+
+.stage-body {
+  padding: 20px 26px 22px;
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  background: var(--surface);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.stage-body:hover { border-color: rgba(255, 200, 87, 0.4); box-shadow: 0 16px 36px -20px rgba(255, 200, 87, 0.35); }
+
+.lvl {
+  display: inline-block;
+  margin-bottom: 10px;
+  padding: 3px 10px;
+  border: 1px solid rgba(122, 168, 255, 0.35);
+  border-radius: 999px;
+  font: 600 0.72rem var(--mono);
+  color: var(--signal);
+}
+
+.js .stage:not(.is-in) .stage-body { opacity: 0; }
+.stage.is-in .stage-body { animation: slide-in-r 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) 0.15s backwards; }
+.stage.is-in .stage-node > .in { animation: pop 0.6s cubic-bezier(0.3, 1.6, 0.5, 1) 0.1s backwards; }
+
+@keyframes slide-in-r { from { opacity: 0; transform: translateX(26px); } }
+
+/* the amber line carries a pulse down from one stage to the next */
+
+.stage:not(:last-child)::after {
+  background: linear-gradient(180deg, transparent, #fff3d1 50%, transparent) no-repeat, var(--amber);
+  background-size: 100% 30%, auto;
+  background-position: 0 -60%, 0 0;
+  animation: trunk 8s linear infinite;
+  animation-delay: calc(var(--i) * 0.9s + 2.5s);
+}
+
+/* the stage I am on right now */
+
+.stage:last-child::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 72px;
+  height: 52px;
+  clip-path: polygon(14px 0, calc(100% - 14px) 0, 100% 50%, calc(100% - 14px) 100%, 14px 100%, 0 50%);
+  background: var(--amber);
+  opacity: 0;
+  pointer-events: none;
+  animation: halo-now 2.4s ease-out infinite 1.2s;
+}
+
+@keyframes halo-now {
+  0% { opacity: 0.45; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1.6); }
+}
+
+.tbc {
+  position: relative;
+  margin: 0;
+  padding: 62px 0 0 96px;
+  font: 500 0.8rem var(--mono);
+  color: var(--muted);
+}
+
+.tbc::before {
+  content: "";
+  position: absolute;
+  left: 35px;
+  top: 8px;
+  width: 2px;
+  height: 52px;
+  background: repeating-linear-gradient(180deg, var(--amber) 0 4px, transparent 4px 10px);
+  -webkit-mask-image: linear-gradient(180deg, #000, transparent);
+  mask-image: linear-gradient(180deg, #000, transparent);
+}
+
+@media (max-width: 640px) {
+  .stage-body { padding: 18px 18px 20px; }
+  .tbc { padding-left: 0; padding-top: 58px; }
+  .tbc::before { left: 17px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::before,
+  .chip .dot,
+  .edu::before,
+  .hexbadge > .in::after,
+  .pw-flow path, .pw-flow-out, .pw-body, .pw-gate text,
+  .pw-out::before, .stage:not(:last-child)::after, .stage:last-child::before {
+    animation: none !important;
+  }
+}

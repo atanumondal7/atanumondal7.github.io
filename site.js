@@ -35,6 +35,7 @@
     initSkills();
     initReveals();
     initLightbox();
+    initCounters();
   });
 
   /* ---------- error screen ---------- */
@@ -232,6 +233,39 @@
 
     var first = box.querySelector(".skill-item.is-active");
     select(first ? first.getAttribute("data-skill") : null);
+  }
+
+  /* ---------- count-up numbers ----------
+     Elements with data-count run from 0 to that number the first time they
+     scroll into view. Without script, or with reduced motion, the final
+     number is already in the markup. */
+
+  function initCounters() {
+    var els = [].slice.call(document.querySelectorAll("[data-count]"));
+    if (!els.length || reduceMotion || !("IntersectionObserver" in window)) return;
+
+    function run(el) {
+      var to = parseInt(el.getAttribute("data-count"), 10);
+      var start = null, dur = 1400;
+      el.textContent = "0";
+      function step(t) {
+        if (start === null) start = t;
+        var p = Math.min((t - start) / dur, 1);
+        el.textContent = Math.round(to * (1 - Math.pow(1 - p, 3)));
+        if (p < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        io.unobserve(en.target);
+        run(en.target);
+      });
+    }, { threshold: 0.6 });
+
+    els.forEach(function (el) { io.observe(el); });
   }
 
   /* ---------- credential image viewer ----------

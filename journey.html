@@ -4,14 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Journey | Atanu Mondal</title>
-  <script src="site.js?v=6"></script>
+  <script src="site.js?v=7"></script>
   <meta name="description" content="How Atanu Mondal went from logic gates to UVM verification.">
   <meta name="theme-color" content="#0a0e17">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230a0e17'/%3E%3Cpath d='M4 22h6V10h8v12h6V10h4' fill='none' stroke='%23ffc857' stroke-width='2.6'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=6">
+  <link rel="stylesheet" href="style.css?v=7">
 </head>
 <body>
 
@@ -49,54 +49,60 @@
     <div class="wrap">
       <ol class="stages">
 
-        <li class="stage">
+        <li class="stage" style="--i:0">
           <div class="hexbus stage-node"><div class="in">1</div></div>
           <div class="stage-body">
+            <span class="lvl">L1 · circuits</span>
             <h2>Circuits and logic</h2>
             <p>I started with circuit analysis, semiconductor physics and digital logic. In Logisim I built a 4-bit ALU, a JK flip-flop, a 4-bit subtractor and a lottery machine, and I modeled an NMOS common-source amplifier in Falstad.</p>
             <ul class="chips"><li class="chip">Logisim</li><li class="chip">Falstad</li><li class="chip">Tinkercad</li></ul>
           </div>
         </li>
 
-        <li class="stage">
+        <li class="stage" style="--i:1">
           <div class="hexbus stage-node"><div class="in">2</div></div>
           <div class="stage-body">
+            <span class="lvl">L2 · RTL</span>
             <h2>Verilog, from gates up</h2>
             <p>I rebuilt the same ideas in Verilog at different levels: gate-level, behavioral, and with randomization. An ALU, an accumulator, a ripple-carry adder, a JK flip-flop, a 4-to-1 mux and a traffic light.</p>
             <ul class="chips"><li class="chip">Verilog</li><li class="chip">EDA Playground</li></ul>
           </div>
         </li>
 
-        <li class="stage">
+        <li class="stage" style="--i:2">
           <div class="hexbus stage-node"><div class="in">3</div></div>
           <div class="stage-body">
+            <span class="lvl">L3 · classes</span>
             <h2>SystemVerilog and class-based testbenches</h2>
             <p>I moved to SystemVerilog classes: generators, drivers, monitors and scoreboards. The bugs taught me the most, such as clocking-block skew, races between monitor and driver, and setup, hold and metastability worked out from first principles.</p>
             <ul class="chips"><li class="chip">SystemVerilog</li><li class="chip">Questa</li></ul>
           </div>
         </li>
 
-        <li class="stage">
+        <li class="stage" style="--i:3">
           <div class="hexbus stage-node"><div class="in">4</div></div>
           <div class="stage-body">
+            <span class="lvl">L4 · coverage</span>
             <h2>Coverage-driven verification</h2>
             <p>Constrained-random stimulus, cross coverage and self-checking scoreboards. The 4-bit ALU testbench reached 100% functional coverage, and the universal shift register testbench tracks 85 coverage bins.</p>
             <p class="links"><a href="projects.html#alu">ALU testbench</a><a href="projects.html#usr">Shift register testbench</a></p>
           </div>
         </li>
 
-        <li class="stage">
+        <li class="stage" style="--i:4">
           <div class="hexbus stage-node"><div class="in">5</div></div>
           <div class="stage-body">
+            <span class="lvl">L5 · UVM</span>
             <h2>UVM</h2>
             <p>I built a UVM environment for a UART in loopback, which passed 1000 of 1000 transactions, and earned Siemens' SystemVerilog UVM Comprehensive Pathway badge by passing three exams.</p>
             <p class="links"><a href="projects.html#uart">UART project</a><a href="badges.html">UVM badges</a></p>
           </div>
         </li>
 
-        <li class="stage">
+        <li class="stage" style="--i:5">
           <div class="hexbus stage-node"><div class="in">now</div></div>
           <div class="stage-body">
+            <span class="lvl">now · protocols</span>
             <h2>What I'm building now</h2>
             <p>I2C building blocks, starting with a shift register and an open-drain bus pad, and finishing the digital alarm clock.</p>
             <p class="links"><a href="projects.html#i2c">I2C blocks</a><a href="projects.html#alarm-clock">Alarm clock</a></p>
@@ -104,6 +110,7 @@
         </li>
 
       </ol>
+      <p class="tbc" aria-hidden="true">to be continued</p>
     </div>
 
   </main>
